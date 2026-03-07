@@ -125,6 +125,38 @@ description: Second skill
     expect(result.stdout).toContain('skill-one');
   });
 
+  it('should filter skills by positional name argument', () => {
+    // Create multiple test skills
+    const skill1Dir = join(testDir, 'skills', 'skill-one');
+    const skill2Dir = join(testDir, 'skills', 'skill-two');
+    mkdirSync(skill1Dir, { recursive: true });
+    mkdirSync(skill2Dir, { recursive: true });
+
+    writeFileSync(
+      join(skill1Dir, 'SKILL.md'),
+      `---
+name: skill-one
+description: First skill
+---
+# Skill One
+`
+    );
+
+    writeFileSync(
+      join(skill2Dir, 'SKILL.md'),
+      `---
+name: skill-two
+description: Second skill
+---
+# Skill Two
+`
+    );
+
+    const result = runCli(['add', 'skill', testDir, 'skill-one', '--list'], testDir);
+    // With positional name and --list, it should show only the filtered skill info
+    expect(result.stdout).toContain('skill-one');
+  });
+
   it('should show error for invalid agent name', () => {
     // Create a test skill
     const skillDir = join(testDir, 'test-skill');
@@ -391,6 +423,33 @@ describe('parseAddOptions', () => {
     expect(result.options.fullDepth).toBe(true);
     expect(result.options.list).toBe(true);
     expect(result.options.global).toBe(true);
+  });
+
+  it('should parse positional skill names after source', () => {
+    const result = parseAddOptions(['source', 'skill-one', 'skill-two']);
+    expect(result.source).toEqual(['source']);
+    expect(result.options.skill).toEqual(['skill-one', 'skill-two']);
+  });
+
+  it('should merge positional skill names with --skill flag', () => {
+    const result = parseAddOptions(['source', 'skill-one', '--skill', 'skill-two']);
+    expect(result.source).toEqual(['source']);
+    expect(result.options.skill).toEqual(['skill-one', 'skill-two']);
+  });
+
+  it('should handle positional names with other flags', () => {
+    const result = parseAddOptions(['source', 'skill-one', '-g', '-y']);
+    expect(result.source).toEqual(['source']);
+    expect(result.options.skill).toEqual(['skill-one']);
+    expect(result.options.global).toBe(true);
+    expect(result.options.yes).toBe(true);
+  });
+
+  it('should handle multiple positional names with agent flag', () => {
+    const result = parseAddOptions(['source', 'skill-one', 'skill-two', '--agent', 'claude-code']);
+    expect(result.source).toEqual(['source']);
+    expect(result.options.skill).toEqual(['skill-one', 'skill-two']);
+    expect(result.options.agent).toEqual(['claude-code']);
   });
 });
 

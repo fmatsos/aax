@@ -114,10 +114,10 @@ ${BOLD}Resource Types:${RESET}
   hook             Hooks (planned)
 
 ${BOLD}Manage Resources:${RESET}
-  add <type> <source>       Add a resource
-  remove <type> [names]     Remove installed resources
-  list <type>               List installed resources
-  find [query]              Search for resources interactively
+  add <type> <source> [names...]    Add a resource
+  remove <type> [names...]          Remove installed resources
+  list <type>                       List installed resources
+  find [query]                      Search for resources interactively
 
 ${BOLD}Updates:${RESET}
   check                     Check for available updates
@@ -139,6 +139,7 @@ ${BOLD}Global Options:${RESET}
 ${BOLD}Examples:${RESET}
   ${DIM}# Add a skill${RESET}
   ${DIM}$${RESET} aax add skill vercel-labs/agent-skills
+  ${DIM}$${RESET} aax add skill vercel-labs/agent-skills pr-review commit
   ${DIM}$${RESET} aax add skill vercel-labs/agent-skills -g
   ${DIM}$${RESET} aax add skill vercel-labs/agent-skills --agent claude-code cursor
   ${DIM}$${RESET} aax add skill vercel-labs/agent-skills --skill pr-review commit

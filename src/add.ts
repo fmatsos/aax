@@ -1754,6 +1754,7 @@ async function promptForFindSkills(
 export function parseAddOptions(args: string[]): { source: string[]; options: AddOptions } {
   const options: AddOptions = {};
   const source: string[] = [];
+  const positionalNames: string[] = [];
 
   for (let i = 0; i < args.length; i++) {
     const arg = args[i];
@@ -1791,8 +1792,19 @@ export function parseAddOptions(args: string[]): { source: string[]; options: Ad
     } else if (arg === '--copy') {
       options.copy = true;
     } else if (arg && !arg.startsWith('-')) {
-      source.push(arg);
+      // First non-flag arg is source, rest are skill names
+      if (source.length === 0) {
+        source.push(arg);
+      } else {
+        positionalNames.push(arg);
+      }
     }
+  }
+
+  // Merge positional names with --skill flag names (prepend positional to maintain intuitive order)
+  if (positionalNames.length > 0) {
+    options.skill = options.skill || [];
+    options.skill.unshift(...positionalNames);
   }
 
   return { source, options };
