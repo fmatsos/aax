@@ -65,20 +65,20 @@ describe('list command', () => {
 
   describe('CLI integration', () => {
     it('should run list command', () => {
-      const result = runCli(['list'], testDir);
+      const result = runCli(['list', 'skill'], testDir);
       // Empty project dir shows "No project skills found"
       expect(result.stdout).toContain('No project skills found');
       expect(result.exitCode).toBe(0);
     });
 
     it('should run ls alias', () => {
-      const result = runCli(['ls'], testDir);
+      const result = runCli(['ls', 'skill'], testDir);
       expect(result.stdout).toContain('No project skills found');
       expect(result.exitCode).toBe(0);
     });
 
     it('should show message when no project skills found', () => {
-      const result = runCli(['list'], testDir);
+      const result = runCli(['list', 'skill'], testDir);
       expect(result.stdout).toContain('No project skills found');
       expect(result.stdout).toContain('Try listing global skills with -g');
       expect(result.exitCode).toBe(0);
@@ -101,7 +101,7 @@ This is a test skill.
 `
       );
 
-      const result = runCli(['list'], testDir);
+      const result = runCli(['list', 'skill'], testDir);
       expect(result.stdout).toContain('test-skill');
       expect(result.stdout).toContain('Project Skills');
       // Description should not be shown
@@ -136,7 +136,7 @@ description: Second skill
 `
       );
 
-      const result = runCli(['list'], testDir);
+      const result = runCli(['list', 'skill'], testDir);
       expect(result.stdout).toContain('skill-one');
       expect(result.stdout).toContain('skill-two');
       expect(result.stdout).toContain('Project Skills');
@@ -157,14 +157,14 @@ description: A project skill
 `
       );
 
-      const result = runCli(['list', '-g'], testDir);
+      const result = runCli(['list', 'skill', '-g'], testDir);
       // Should not show project skill when -g is specified
       expect(result.stdout).not.toContain('project-skill');
       expect(result.stdout).toContain('Global Skills');
     });
 
     it('should show error for invalid agent filter', () => {
-      const result = runCli(['list', '-a', 'invalid-agent'], testDir);
+      const result = runCli(['list', 'skill', '-a', 'invalid-agent'], testDir);
       expect(result.stdout).toContain('Invalid agents');
       expect(result.stdout).toContain('invalid-agent');
       expect(result.exitCode).toBe(1);
@@ -184,7 +184,7 @@ description: A test skill
 `
       );
 
-      const result = runCli(['list', '-a', 'claude-code'], testDir);
+      const result = runCli(['list', 'skill', '-a', 'claude-code'], testDir);
       expect(result.stdout).toContain('test-skill');
       expect(result.exitCode).toBe(0);
     });
@@ -208,7 +208,7 @@ description: Valid skill
       mkdirSync(invalidDir, { recursive: true });
       writeFileSync(join(invalidDir, 'README.md'), '# Not a skill');
 
-      const result = runCli(['list'], testDir);
+      const result = runCli(['list', 'skill'], testDir);
       expect(result.stdout).toContain('valid-skill');
       expect(result.stdout).not.toContain('invalid-skill');
       expect(result.exitCode).toBe(0);
@@ -233,7 +233,7 @@ description: Valid skill
       mkdirSync(invalidDir, { recursive: true });
       writeFileSync(join(invalidDir, 'SKILL.md'), '# Invalid\nNo frontmatter here');
 
-      const result = runCli(['list'], testDir);
+      const result = runCli(['list', 'skill'], testDir);
       expect(result.stdout).toContain('valid-skill');
       expect(result.stdout).not.toContain('invalid-skill');
       expect(result.exitCode).toBe(0);
@@ -252,7 +252,7 @@ description: A test skill
 `
       );
 
-      const result = runCli(['list'], testDir);
+      const result = runCli(['list', 'skill'], testDir);
       // Path is shown inline with skill name (handles both Unix / and Windows \)
       expect(result.stdout).toMatch(/\.agents[/\\]skills[/\\]test-skill/);
     });
