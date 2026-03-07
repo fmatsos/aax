@@ -1,6 +1,8 @@
-# AGENTS.md
+# CLAUDE.md
 
 This file provides guidance to AI coding agents working on the `aax` CLI codebase.
+
+> 📚 For detailed documentation, see the [docs/](./docs/) directory.
 
 ## Project Overview
 
