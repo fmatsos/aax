@@ -37,12 +37,12 @@ const DIM = '\x1b[38;5;102m'; // darker gray for secondary text
 const TEXT = '\x1b[38;5;145m'; // lighter gray for primary text
 
 const LOGO_LINES = [
-  '███████╗█████╗ █████╗ ██╗',
-  '██╔════╝██╔══██╗██╔══██╗██║',
-  '███████╗███████║███████║██║',
-  '╚════██║██╔══██║██╔══██║██║',
-  '███████║██║  ██║██║  ██║███████╗',
-  '╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝',
+  ' █████╗  █████╗ ██╗  ██╗',
+  '██╔══██╗██╔══██╗╚██╗██╔╝',
+  '███████║███████║ ╚███╔╝ ',
+  '██╔══██║██╔══██║ ██╔██╗ ',
+  '██║  ██║██║  ██║██╔╝ ██╗',
+  '╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝',
 ];
 
 // 256-color middle grays - visible on both light and dark backgrounds
@@ -65,41 +65,41 @@ function showLogo(): void {
 function showBanner(): void {
   showLogo();
   console.log();
-  console.log(`${DIM}The open agent skills ecosystem${RESET}`);
+  console.log(`${DIM}The open agent package manager${RESET}`);
   console.log();
   console.log(
-    `  ${DIM}$${RESET} ${TEXT}npx aax add ${DIM}<package>${RESET}        ${DIM}Add a new skill${RESET}`
+    `  ${DIM}$${RESET} ${TEXT}npx aax add ${DIM}<package>${RESET}        ${DIM}Add a new package${RESET}`
   );
   console.log(
-    `  ${DIM}$${RESET} ${TEXT}npx aax remove${RESET}               ${DIM}Remove installed skills${RESET}`
+    `  ${DIM}$${RESET} ${TEXT}npx aax remove${RESET}               ${DIM}Remove installed packages${RESET}`
   );
   console.log(
-    `  ${DIM}$${RESET} ${TEXT}npx aax list${RESET}                 ${DIM}List installed skills${RESET}`
+    `  ${DIM}$${RESET} ${TEXT}npx aax list${RESET}                 ${DIM}List installed packages${RESET}`
   );
   console.log(
-    `  ${DIM}$${RESET} ${TEXT}npx aax find ${DIM}[query]${RESET}         ${DIM}Search for skills${RESET}`
+    `  ${DIM}$${RESET} ${TEXT}npx aax find ${DIM}[query]${RESET}         ${DIM}Search for packages${RESET}`
   );
   console.log();
   console.log(
     `  ${DIM}$${RESET} ${TEXT}npx aax check${RESET}                ${DIM}Check for updates${RESET}`
   );
   console.log(
-    `  ${DIM}$${RESET} ${TEXT}npx aax update${RESET}               ${DIM}Update all skills${RESET}`
+    `  ${DIM}$${RESET} ${TEXT}npx aax update${RESET}               ${DIM}Update all packages${RESET}`
   );
   console.log();
   console.log(
-    `  ${DIM}$${RESET} ${TEXT}npx aax experimental_install${RESET} ${DIM}Restore from skills-lock.json${RESET}`
+    `  ${DIM}$${RESET} ${TEXT}npx aax experimental_install${RESET} ${DIM}Restore from lock file${RESET}`
   );
   console.log(
-    `  ${DIM}$${RESET} ${TEXT}npx aax init ${DIM}[name]${RESET}          ${DIM}Create a new skill${RESET}`
+    `  ${DIM}$${RESET} ${TEXT}npx aax init ${DIM}[name]${RESET}          ${DIM}Create a new package${RESET}`
   );
   console.log(
-    `  ${DIM}$${RESET} ${TEXT}npx aax experimental_sync${RESET}    ${DIM}Sync skills from node_modules${RESET}`
+    `  ${DIM}$${RESET} ${TEXT}npx aax experimental_sync${RESET}    ${DIM}Sync packages from node_modules${RESET}`
   );
   console.log();
   console.log(`${DIM}try:${RESET} npx aax add vercel-labs/agent-skills`);
   console.log();
-  console.log(`Discover more skills at ${TEXT}https://aax.sh/${RESET}`);
+  console.log(`Discover more packages at ${TEXT}https://aax.sh/${RESET}`);
   console.log();
 }
 
@@ -107,28 +107,28 @@ function showHelp(): void {
   console.log(`
 ${BOLD}Usage:${RESET} aax <command> [options]
 
-${BOLD}Manage Skills:${RESET}
-  add <package>        Add a skill package (alias: a)
+${BOLD}Manage Packages:${RESET}
+  add <package>        Add a package (alias: a)
                        e.g. vercel-labs/agent-skills
                             https://github.com/vercel-labs/agent-skills
-  remove [skills]      Remove installed skills
-  list, ls             List installed skills
-  find [query]         Search for skills interactively
+  remove [packages]    Remove installed packages
+  list, ls             List installed packages
+  find [query]         Search for packages interactively
 
 ${BOLD}Updates:${RESET}
-  check                Check for available skill updates
-  update               Update all skills to latest versions
+  check                Check for available updates
+  update               Update all packages to latest versions
 
 ${BOLD}Project:${RESET}
-  experimental_install Restore skills from skills-lock.json
-  init [name]          Initialize a skill (creates <name>/SKILL.md or ./SKILL.md)
-  experimental_sync    Sync skills from node_modules into agent directories
+  experimental_install Restore packages from lock file
+  init [name]          Initialize a package (creates <name>/SKILL.md or ./SKILL.md)
+  experimental_sync    Sync packages from node_modules into agent directories
 
 ${BOLD}Add Options:${RESET}
-  -g, --global           Install skill globally (user-level) instead of project-level
+  -g, --global           Install globally (user-level) instead of project-level
   -a, --agent <agents>   Specify agents to install to (use '*' for all agents)
-  -s, --skill <skills>   Specify skill names to install (use '*' for all skills)
-  -l, --list             List available skills in the repository without installing
+  -s, --skill <skills>   Specify package names to install (use '*' for all)
+  -l, --list             List available packages in the repository without installing
   -y, --yes              Skip confirmation prompts
   --copy                 Copy files instead of symlinking to agent directories
   --all                  Shorthand for --skill '*' --agent '*' -y
@@ -137,16 +137,16 @@ ${BOLD}Add Options:${RESET}
 ${BOLD}Remove Options:${RESET}
   -g, --global           Remove from global scope
   -a, --agent <agents>   Remove from specific agents (use '*' for all agents)
-  -s, --skill <skills>   Specify skills to remove (use '*' for all skills)
+  -s, --skill <skills>   Specify packages to remove (use '*' for all)
   -y, --yes              Skip confirmation prompts
   --all                  Shorthand for --skill '*' --agent '*' -y
-  
+
 ${BOLD}Experimental Sync Options:${RESET}
   -a, --agent <agents>   Specify agents to install to (use '*' for all agents)
   -y, --yes              Skip confirmation prompts
 
 ${BOLD}List Options:${RESET}
-  -g, --global           List global skills (default: project)
+  -g, --global           List global packages (default: project)
   -a, --agent <agents>   Filter by specific agents
 
 ${BOLD}Options:${RESET}
@@ -161,8 +161,8 @@ ${BOLD}Examples:${RESET}
   ${DIM}$${RESET} aax remove                        ${DIM}# interactive remove${RESET}
   ${DIM}$${RESET} aax remove web-design             ${DIM}# remove by name${RESET}
   ${DIM}$${RESET} aax rm --global frontend-design
-  ${DIM}$${RESET} aax list                          ${DIM}# list project skills${RESET}
-  ${DIM}$${RESET} aax ls -g                         ${DIM}# list global skills${RESET}
+  ${DIM}$${RESET} aax list                          ${DIM}# list project packages${RESET}
+  ${DIM}$${RESET} aax ls -g                         ${DIM}# list global packages${RESET}
   ${DIM}$${RESET} aax ls -a claude-code             ${DIM}# filter by agent${RESET}
   ${DIM}$${RESET} aax find                          ${DIM}# interactive search${RESET}
   ${DIM}$${RESET} aax find typescript               ${DIM}# search by keyword${RESET}
@@ -173,38 +173,38 @@ ${BOLD}Examples:${RESET}
   ${DIM}$${RESET} aax experimental_sync              ${DIM}# sync from node_modules${RESET}
   ${DIM}$${RESET} aax experimental_sync -y           ${DIM}# sync without prompts${RESET}
 
-Discover more skills at ${TEXT}https://aax.sh/${RESET}
+Discover more packages at ${TEXT}https://aax.sh/${RESET}
 `);
 }
 
 function showRemoveHelp(): void {
   console.log(`
-${BOLD}Usage:${RESET} aax remove [skills...] [options]
+${BOLD}Usage:${RESET} aax remove [packages...] [options]
 
 ${BOLD}Description:${RESET}
-  Remove installed skills from agents. If no skill names are provided,
+  Remove installed packages from agents. If no package names are provided,
   an interactive selection menu will be shown.
 
 ${BOLD}Arguments:${RESET}
-  skills            Optional skill names to remove (space-separated)
+  packages          Optional package names to remove (space-separated)
 
 ${BOLD}Options:${RESET}
   -g, --global       Remove from global scope (~/) instead of project scope
   -a, --agent        Remove from specific agents (use '*' for all agents)
-  -s, --skill        Specify skills to remove (use '*' for all skills)
+  -s, --skill        Specify packages to remove (use '*' for all)
   -y, --yes          Skip confirmation prompts
   --all              Shorthand for --skill '*' --agent '*' -y
 
 ${BOLD}Examples:${RESET}
   ${DIM}$${RESET} aax remove                           ${DIM}# interactive selection${RESET}
-  ${DIM}$${RESET} aax remove my-skill                   ${DIM}# remove specific skill${RESET}
-  ${DIM}$${RESET} aax remove skill1 skill2 -y           ${DIM}# remove multiple skills${RESET}
-  ${DIM}$${RESET} aax remove --global my-skill          ${DIM}# remove from global scope${RESET}
-  ${DIM}$${RESET} aax rm --agent claude-code my-skill   ${DIM}# remove from specific agent${RESET}
-  ${DIM}$${RESET} aax remove --all                      ${DIM}# remove all skills${RESET}
-  ${DIM}$${RESET} aax remove --skill '*' -a cursor      ${DIM}# remove all skills from cursor${RESET}
+  ${DIM}$${RESET} aax remove my-package                ${DIM}# remove specific package${RESET}
+  ${DIM}$${RESET} aax remove pkg1 pkg2 -y              ${DIM}# remove multiple packages${RESET}
+  ${DIM}$${RESET} aax remove --global my-package       ${DIM}# remove from global scope${RESET}
+  ${DIM}$${RESET} aax rm --agent claude-code my-package ${DIM}# remove from specific agent${RESET}
+  ${DIM}$${RESET} aax remove --all                     ${DIM}# remove all packages${RESET}
+  ${DIM}$${RESET} aax remove --skill '*' -a cursor     ${DIM}# remove all packages from cursor${RESET}
 
-Discover more skills at ${TEXT}https://aax.sh/${RESET}
+Discover more packages at ${TEXT}https://aax.sh/${RESET}
 `);
 }
 

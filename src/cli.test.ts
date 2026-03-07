@@ -8,7 +8,7 @@ describe('aax CLI', () => {
     it('should display help message', () => {
       const output = runCliOutput(['--help']);
       expect(output).toContain('Usage: aax <command> [options]');
-      expect(output).toContain('Manage Skills:');
+      expect(output).toContain('Manage Packages:');
       expect(output).toContain('init [name]');
       expect(output).toContain('add <package>');
       expect(output).toContain('check');
@@ -47,7 +47,7 @@ describe('aax CLI', () => {
   describe('no arguments', () => {
     it('should display banner', () => {
       const output = stripLogo(runCliOutput([]));
-      expect(output).toContain('The open agent skills ecosystem');
+      expect(output).toContain('The open agent package manager');
       expect(output).toContain('npx aax add');
       expect(output).toContain('npx aax check');
       expect(output).toContain('npx aax update');
