@@ -21,7 +21,7 @@ describe('add command', () => {
   });
 
   it('should show error when no source provided', () => {
-    const result = runCli(['add', 'skill', 'skill'], testDir);
+    const result = runCli(['add', 'skill'], testDir);
     expect(result.stdout).toContain('ERROR');
     expect(result.stdout).toContain('Missing required argument: source');
     expect(result.exitCode).toBe(1);
@@ -50,14 +50,14 @@ This is a test skill.
 `
     );
 
-    const result = runCli(['add', testDir, '--list'], testDir);
+    const result = runCli(['add', 'skill', testDir, '--list'], testDir);
     expect(result.stdout).toContain('test-skill');
     expect(result.stdout).toContain('A test skill for testing');
     expect(result.exitCode).toBe(0);
   });
 
   it('should show no skills found for empty directory', () => {
-    const result = runCli(['add', testDir, '-y'], testDir);
+    const result = runCli(['add', 'skill', testDir, '-y'], testDir);
     expect(result.stdout).toContain('No skills found');
     expect(result.stdout).toContain('No valid skills found');
     expect(result.exitCode).toBe(1);
@@ -84,7 +84,10 @@ Instructions here.
     const targetDir = join(testDir, 'project');
     mkdirSync(targetDir, { recursive: true });
 
-    const result = runCli(['add', testDir, '-y', '-g', '--agent', 'claude-code'], targetDir);
+    const result = runCli(
+      ['add', 'skill', testDir, '-y', '-g', '--agent', 'claude-code'],
+      targetDir
+    );
     expect(result.stdout).toContain('my-skill');
     expect(result.stdout).toContain('Done!');
     expect(result.exitCode).toBe(0);
@@ -117,7 +120,7 @@ description: Second skill
 `
     );
 
-    const result = runCli(['add', testDir, '--list', '--skill', 'skill-one'], testDir);
+    const result = runCli(['add', 'skill', testDir, '--list', '--skill', 'skill-one'], testDir);
     // With --list, it should show only the filtered skill info
     expect(result.stdout).toContain('skill-one');
   });
@@ -136,21 +139,21 @@ description: Test
 `
     );
 
-    const result = runCli(['add', testDir, '-y', '--agent', 'invalid-agent'], testDir);
+    const result = runCli(['add', 'skill', testDir, '-y', '--agent', 'invalid-agent'], testDir);
     expect(result.stdout).toContain('Invalid agents');
     expect(result.exitCode).toBe(1);
   });
 
-  it('should support add command aliases (a, i, install)', () => {
-    // Test that aliases work (just check they show missing source error)
+  it('should show unknown command for removed aliases', () => {
+    // Aliases 'a', 'i', 'install' were removed in favor of explicit 'add skill' syntax
     const resultA = runCli(['a'], testDir);
     const resultI = runCli(['i'], testDir);
     const resultInstall = runCli(['install'], testDir);
 
-    // All should show the same "missing source" error
-    expect(resultA.stdout).toContain('Missing required argument: source');
-    expect(resultI.stdout).toContain('Missing required argument: source');
-    expect(resultInstall.stdout).toContain('Missing required argument: source');
+    // All should show unknown command error
+    expect(resultA.stdout).toContain('Unknown command');
+    expect(resultI.stdout).toContain('Unknown command');
+    expect(resultInstall.stdout).toContain('Unknown command');
   });
 
   it('should restore from lock file with experimental_install', () => {
@@ -178,7 +181,7 @@ This is an internal skill.
 `
       );
 
-      const result = runCli(['add', testDir, '--list'], testDir);
+      const result = runCli(['add', 'skill', testDir, '--list'], testDir);
       expect(result.stdout).not.toContain('internal-skill');
     });
 
@@ -201,7 +204,7 @@ This is an internal skill.
 `
       );
 
-      const result = runCli(['add', testDir, '--list'], testDir, {
+      const result = runCli(['add', 'skill', testDir, '--list'], testDir, {
         INSTALL_INTERNAL_SKILLS: '1',
       });
       expect(result.stdout).toContain('internal-skill');
@@ -227,7 +230,7 @@ This is an internal skill.
 `
       );
 
-      const result = runCli(['add', testDir, '--list'], testDir, {
+      const result = runCli(['add', 'skill', testDir, '--list'], testDir, {
         INSTALL_INTERNAL_SKILLS: 'true',
       });
       expect(result.stdout).toContain('internal-skill');
@@ -263,12 +266,12 @@ description: A public skill
       );
 
       // Without env var - only public skill visible
-      const resultWithout = runCli(['add', testDir, '--list'], testDir);
+      const resultWithout = runCli(['add', 'skill', testDir, '--list'], testDir);
       expect(resultWithout.stdout).toContain('public-skill');
       expect(resultWithout.stdout).not.toContain('internal-skill');
 
       // With env var - both visible
-      const resultWith = runCli(['add', testDir, '--list'], testDir, {
+      const resultWith = runCli(['add', 'skill', testDir, '--list'], testDir, {
         INSTALL_INTERNAL_SKILLS: '1',
       });
       expect(resultWith.stdout).toContain('public-skill');
@@ -290,7 +293,7 @@ metadata:
 `
       );
 
-      const result = runCli(['add', testDir, '--list'], testDir);
+      const result = runCli(['add', 'skill', testDir, '--list'], testDir);
       expect(result.stdout).toContain('not-internal-skill');
     });
   });
@@ -423,7 +426,10 @@ This is a test skill for -y flag mode testing.
     );
 
     // Run with -y flag - should complete without hanging
-    const result = runCli(['add', testDir, '-g', '-y', '--skill', 'yes-flag-test-skill'], testDir);
+    const result = runCli(
+      ['add', 'skill', testDir, '-g', '-y', '--skill', 'yes-flag-test-skill'],
+      testDir
+    );
 
     // Should not contain the find-skills prompt
     expect(result.stdout).not.toContain('Install the find-skills skill');

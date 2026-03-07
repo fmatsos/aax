@@ -154,7 +154,7 @@ This is a test skill.
 
     it('should list skills to remove before confirmation', () => {
       // Answer 'n' to cancel the confirmation prompt
-      const result = runCliWithInput(['remove', 'skill-one', 'skill-two'], 'n', testDir);
+      const result = runCliWithInput(['remove', 'skill', 'skill-one', 'skill-two'], 'n', testDir);
 
       // Should show the skills that will be removed
       expect(result.stdout).toContain('Skills to remove');
@@ -228,9 +228,10 @@ This is a test skill.
       expect(result.exitCode).toBe(0);
     });
 
-    it('should support "r" alias', () => {
-      const result = runCli(['r', 'alias-test-skill', '-y'], testDir);
-      expect(result.stdout).toContain('Successfully removed');
+    it('should show unknown command for removed "r" alias', () => {
+      // The 'r' alias was removed in favor of more explicit commands
+      const result = runCli(['r', 'skill', 'alias-test-skill', '-y'], testDir);
+      expect(result.stdout).toContain('Unknown command');
       expect(result.exitCode).toBe(0);
     });
   });
