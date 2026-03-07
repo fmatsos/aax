@@ -262,7 +262,7 @@ description: A test skill
     it('should include list command in help', () => {
       const result = runCli(['--help']);
       expect(result.stdout).toContain('list, ls');
-      expect(result.stdout).toContain('List installed skills');
+      expect(result.stdout).toContain('List installed packages');
     });
 
     it('should include list options in help', () => {
@@ -274,17 +274,17 @@ description: A test skill
 
     it('should include list examples in help', () => {
       const result = runCli(['--help']);
-      expect(result.stdout).toContain('skills list');
-      expect(result.stdout).toContain('skills ls -g');
-      expect(result.stdout).toContain('skills ls -a claude-code');
+      expect(result.stdout).toContain('aax list');
+      expect(result.stdout).toContain('aax ls -g');
+      expect(result.stdout).toContain('aax ls -a claude-code');
     });
   });
 
   describe('banner', () => {
     it('should include list command in banner', () => {
       const result = runCli([]);
-      expect(result.stdout).toContain('npx skills list');
-      expect(result.stdout).toContain('List installed skills');
+      expect(result.stdout).toContain('npx aax list');
+      expect(result.stdout).toContain('List installed packages');
     });
   });
 });

@@ -1,11 +1,10 @@
 {
-  "name": "skills",
+  "name": "aax",
   "version": "1.4.3",
-  "description": "The open agent skills ecosystem",
+  "description": "The open agent package manager",
   "type": "module",
   "bin": {
-    "skills": "./bin/cli.mjs",
-    "add-skill": "./bin/cli.mjs"
+    "aax": "./bin/cli.mjs"
   },
   "files": [
     "dist",
@@ -34,7 +33,7 @@
   "keywords": [
     "cli",
     "agent-skills",
-    "skills",
+    "aax",
     "ai-agents",
     "amp",
     "antigravity",
@@ -80,11 +79,11 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/vercel-labs/skills.git"
+    "url": "git+https://github.com/fmatsos/aax.git"
   },
-  "homepage": "https://github.com/vercel-labs/skills#readme",
+  "homepage": "https://github.com/fmatsos/aax#readme",
   "bugs": {
-    "url": "https://github.com/vercel-labs/skills/issues"
+    "url": "https://github.com/fmatsos/aax/issues"
   },
   "author": "",
   "license": "MIT",

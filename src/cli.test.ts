@@ -3,12 +3,12 @@ import { readFileSync } from 'fs';
 import { join } from 'path';
 import { runCliOutput, stripLogo, hasLogo } from './test-utils.ts';
 
-describe('skills CLI', () => {
+describe('aax CLI', () => {
   describe('--help', () => {
     it('should display help message', () => {
       const output = runCliOutput(['--help']);
-      expect(output).toContain('Usage: skills <command> [options]');
-      expect(output).toContain('Manage Skills:');
+      expect(output).toContain('Usage: aax <command> [options]');
+      expect(output).toContain('Manage Packages:');
       expect(output).toContain('init [name]');
       expect(output).toContain('add <package>');
       expect(output).toContain('check');
@@ -47,12 +47,12 @@ describe('skills CLI', () => {
   describe('no arguments', () => {
     it('should display banner', () => {
       const output = stripLogo(runCliOutput([]));
-      expect(output).toContain('The open agent skills ecosystem');
-      expect(output).toContain('npx skills add');
-      expect(output).toContain('npx skills check');
-      expect(output).toContain('npx skills update');
-      expect(output).toContain('npx skills init');
-      expect(output).toContain('skills.sh');
+      expect(output).toContain('The open agent package manager');
+      expect(output).toContain('npx aax add');
+      expect(output).toContain('npx aax check');
+      expect(output).toContain('npx aax update');
+      expect(output).toContain('npx aax init');
+      expect(output).toContain('aax.sh');
     });
   });
 
