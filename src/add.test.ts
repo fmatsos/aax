@@ -21,14 +21,14 @@ describe('add command', () => {
   });
 
   it('should show error when no source provided', () => {
-    const result = runCli(['add'], testDir);
+    const result = runCli(['add', 'skill', 'skill'], testDir);
     expect(result.stdout).toContain('ERROR');
     expect(result.stdout).toContain('Missing required argument: source');
     expect(result.exitCode).toBe(1);
   });
 
   it('should show error for non-existent local path', () => {
-    const result = runCli(['add', './non-existent-path', '-y'], testDir);
+    const result = runCli(['add', 'skill', './non-existent-path', '-y'], testDir);
     expect(result.stdout).toContain('Local path does not exist');
     expect(result.exitCode).toBe(1);
   });

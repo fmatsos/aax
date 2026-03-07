@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import {
-  getResourceType,
+  parseResourceType,
   validateResourceType,
   getResourceTypeDisplayName,
   getResourceTypePluralName,
@@ -8,20 +8,37 @@ import {
 import type { ResourceType } from '../src/types.ts';
 
 describe('resource-type utilities', () => {
-  describe('getResourceType', () => {
-    it('should return skill as default resource type', () => {
-      const result = getResourceType({});
+  describe('parseResourceType', () => {
+    it('should parse and return skill resource type', () => {
+      const result = parseResourceType('skill');
       expect(result).toBe('skill');
     });
 
-    it('should return skill when skill option is present', () => {
-      const result = getResourceType({ skill: ['test'] });
-      expect(result).toBe('skill');
+    it('should parse and return mcp resource type', () => {
+      const result = parseResourceType('mcp');
+      expect(result).toBe('mcp');
     });
 
-    it('should always return skill for now (only supported type)', () => {
-      const result = getResourceType({ skill: undefined });
-      expect(result).toBe('skill');
+    it('should parse and return instruction resource type', () => {
+      const result = parseResourceType('instruction');
+      expect(result).toBe('instruction');
+    });
+
+    it('should parse and return hook resource type', () => {
+      const result = parseResourceType('hook');
+      expect(result).toBe('hook');
+    });
+
+    it('should throw error for undefined subcommand', () => {
+      expect(() => parseResourceType(undefined)).toThrow('Resource type is required');
+    });
+
+    it('should throw error for invalid resource type', () => {
+      expect(() => parseResourceType('invalid')).toThrow("Invalid resource type: 'invalid'");
+    });
+
+    it('should throw error for empty string', () => {
+      expect(() => parseResourceType('')).toThrow('Resource type is required');
     });
   });
 
