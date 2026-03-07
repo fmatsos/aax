@@ -24,12 +24,12 @@ The Skills CLI (`npx skills`) is the package manager for the open agent skills e
 
 **Key commands:**
 
-- `npx skills find [query]` - Search for skills interactively or by keyword
-- `npx skills add <package>` - Install a skill from GitHub or other sources
-- `npx skills check` - Check for skill updates
-- `npx skills update` - Update all installed skills
+- `npx aax find [query]` - Search for skills interactively or by keyword
+- `npx aax add <package>` - Install a skill from GitHub or other sources
+- `npx aax check` - Check for skill updates
+- `npx aax update` - Update all installed skills
 
-**Browse skills at:** https://skills.sh/
+**Browse skills at:** https://aax.sh/
 
 ## How to Help Users Find Skills
 
@@ -46,22 +46,22 @@ When a user asks for help with something, identify:
 Run the find command with a relevant query:
 
 ```bash
-npx skills find [query]
+npx aax find [query]
 ```
 
 For example:
 
-- User asks "how do I make my React app faster?" → `npx skills find react performance`
-- User asks "can you help me with PR reviews?" → `npx skills find pr review`
-- User asks "I need to create a changelog" → `npx skills find changelog`
+- User asks "how do I make my React app faster?" → `npx aax find react performance`
+- User asks "can you help me with PR reviews?" → `npx aax find pr review`
+- User asks "I need to create a changelog" → `npx aax find changelog`
 
 The command will return results like:
 
 ```
-Install with npx skills add <owner/repo@skill>
+Install with npx aax add <owner/repo@skill>
 
 vercel-labs/agent-skills@vercel-react-best-practices
-└ https://skills.sh/vercel-labs/agent-skills/vercel-react-best-practices
+└ https://aax.sh/vercel-labs/agent-skills/vercel-react-best-practices
 ```
 
 ### Step 3: Present Options to the User
@@ -79,9 +79,9 @@ I found a skill that might help! The "vercel-react-best-practices" skill provide
 React and Next.js performance optimization guidelines from Vercel Engineering.
 
 To install it:
-npx skills add vercel-labs/agent-skills@vercel-react-best-practices
+npx aax add vercel-labs/agent-skills@vercel-react-best-practices
 
-Learn more: https://skills.sh/vercel-labs/agent-skills/vercel-react-best-practices
+Learn more: https://aax.sh/vercel-labs/agent-skills/vercel-react-best-practices
 ```
 
 ### Step 4: Offer to Install
@@ -89,7 +89,7 @@ Learn more: https://skills.sh/vercel-labs/agent-skills/vercel-react-best-practic
 If the user wants to proceed, you can install the skill for them:
 
 ```bash
-npx skills add <owner/repo@skill> -g -y
+npx aax add <owner/repo@skill> -g -y
 ```
 
 The `-g` flag installs globally (user-level) and `-y` skips confirmation prompts.
@@ -120,7 +120,7 @@ If no relevant skills exist:
 
 1. Acknowledge that no existing skill was found
 2. Offer to help with the task directly using your general capabilities
-3. Suggest the user could create their own skill with `npx skills init`
+3. Suggest the user could create their own skill with `npx aax init`
 
 Example:
 
@@ -129,5 +129,5 @@ I searched for skills related to "xyz" but didn't find any matches.
 I can still help you with this task directly! Would you like me to proceed?
 
 If this is something you do often, you could create your own skill:
-npx skills init my-xyz-skill
+npx aax init my-xyz-skill
 ```
