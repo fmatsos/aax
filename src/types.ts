@@ -1,3 +1,10 @@
+/**
+ * Resource types that can be managed by aax.
+ * Currently only 'skill' is implemented, but this is designed to support
+ * future resource types like 'mcp', 'instruction', 'hook', etc.
+ */
+export type ResourceType = 'skill' | 'mcp' | 'instruction' | 'hook';
+
 export type AgentType =
   | 'amp'
   | 'antigravity'

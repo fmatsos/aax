@@ -12,6 +12,11 @@ import {
   getCanonicalSkillsDir,
   sanitizeName,
 } from './installer.ts';
+import {
+  getResourceType,
+  validateResourceType,
+  getResourceTypeDisplayName,
+} from './resource-type.ts';
 
 export interface RemoveOptions {
   global?: boolean;
@@ -21,6 +26,10 @@ export interface RemoveOptions {
 }
 
 export async function removeCommand(skillNames: string[], options: RemoveOptions) {
+  // Determine and validate resource type
+  const resourceType = getResourceType(options);
+  validateResourceType(resourceType);
+
   const isGlobal = options.global ?? false;
   const cwd = process.cwd();
 
