@@ -7,19 +7,12 @@ describe('aax CLI', () => {
   describe('--help', () => {
     it('should display help message', () => {
       const output = runCliOutput(['--help']);
-      expect(output).toContain('Usage: aax <command> [options]');
-      expect(output).toContain('Manage Packages:');
-      expect(output).toContain('init [name]');
-      expect(output).toContain('add <package>');
-      expect(output).toContain('check');
-      expect(output).toContain('update');
-      expect(output).toContain('Add Options:');
-      expect(output).toContain('-g, --global');
-      expect(output).toContain('-a, --agent');
-      expect(output).toContain('-s, --skill');
-      expect(output).toContain('-l, --list');
-      expect(output).toContain('-y, --yes');
-      expect(output).toContain('--all');
+      expect(output).toContain('Usage: aax <command> <resource-type>');
+      expect(output).toContain('Manage Resources:');
+      expect(output).toContain('add <type> <source>');
+      expect(output).toContain('Resource Types:');
+      expect(output).toContain('skill');
+      expect(output).toContain('mcp');
     });
 
     it('should show same output for -h alias', () => {
@@ -59,17 +52,14 @@ describe('aax CLI', () => {
   describe('unknown command', () => {
     it('should show error for unknown command', () => {
       const output = runCliOutput(['unknown-command']);
-      expect(output).toMatchInlineSnapshot(`
-        "Unknown command: unknown-command
-        Run skills --help for usage.
-        "
-      `);
+      expect(output).toContain('Unknown command: unknown-command');
+      expect(output).toContain('aax --help');
     });
   });
 
   describe('logo display', () => {
     it('should not display logo for list command', () => {
-      const output = runCliOutput(['list']);
+      const output = runCliOutput(['list', 'skill']);
       expect(hasLogo(output)).toBe(false);
     });
 

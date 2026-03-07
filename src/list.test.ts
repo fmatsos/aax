@@ -261,22 +261,14 @@ description: A test skill
   describe('help output', () => {
     it('should include list command in help', () => {
       const result = runCli(['--help']);
-      expect(result.stdout).toContain('list, ls');
-      expect(result.stdout).toContain('List installed packages');
-    });
-
-    it('should include list options in help', () => {
-      const result = runCli(['--help']);
-      expect(result.stdout).toContain('List Options:');
-      expect(result.stdout).toContain('-g, --global');
-      expect(result.stdout).toContain('-a, --agent');
+      expect(result.stdout).toContain('list <type>');
+      expect(result.stdout).toContain('List installed resources');
     });
 
     it('should include list examples in help', () => {
       const result = runCli(['--help']);
-      expect(result.stdout).toContain('aax list');
-      expect(result.stdout).toContain('aax ls -g');
-      expect(result.stdout).toContain('aax ls -a claude-code');
+      expect(result.stdout).toContain('aax list skill');
+      expect(result.stdout).toContain('list global skills');
     });
   });
 
