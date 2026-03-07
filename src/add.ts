@@ -5,6 +5,11 @@ import { homedir } from 'os';
 import { sep } from 'path';
 import { parseSource, getOwnerRepo, parseOwnerRepo, isRepoPrivate } from './source-parser.ts';
 import { searchMultiselect, cancelSymbol } from './prompts/search-multiselect.ts';
+import {
+  getResourceType,
+  validateResourceType,
+  getResourceTypeDisplayName,
+} from './resource-type.ts';
 
 // Helper to check if a value is a cancel symbol (works with both clack and our custom prompts)
 const isCancelled = (value: unknown): value is symbol => typeof value === 'symbol';
@@ -876,6 +881,10 @@ async function handleWellKnownSkills(
 }
 
 export async function runAdd(args: string[], options: AddOptions = {}): Promise<void> {
+  // Determine and validate resource type
+  const resourceType = getResourceType(options);
+  validateResourceType(resourceType);
+
   const source = args[0];
   let installTipShown = false;
 
