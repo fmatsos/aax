@@ -6,6 +6,8 @@ The open agent package manager.
 Supports **OpenCode**, **Claude Code**, **Codex**, **Cursor**, and [37 more](#available-agents).
 <!-- agent-list:end -->
 
+> 📚 **[Documentation](./docs/)** | 🏗️ **[Architecture](./docs/architecture/)** | 🤝 **[Contributing](./docs/development/contributing.md)**
+
 ## Install a Skill
 
 ```bash
