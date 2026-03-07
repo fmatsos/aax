@@ -37,12 +37,12 @@ const DIM = '\x1b[38;5;102m'; // darker gray for secondary text
 const TEXT = '\x1b[38;5;145m'; // lighter gray for primary text
 
 const LOGO_LINES = [
-  '███████╗██╗  ██╗██╗██╗     ██╗     ███████╗',
-  '██╔════╝██║ ██╔╝██║██║     ██║     ██╔════╝',
-  '███████╗█████╔╝ ██║██║     ██║     ███████╗',
-  '╚════██║██╔═██╗ ██║██║     ██║     ╚════██║',
-  '███████║██║  ██╗██║███████╗███████╗███████║',
-  '╚══════╝╚═╝  ╚═╝╚═╝╚══════╝╚══════╝╚══════╝',
+  '███████╗█████╗ █████╗ ██╗',
+  '██╔════╝██╔══██╗██╔══██╗██║',
+  '███████╗███████║███████║██║',
+  '╚════██║██╔══██║██╔══██║██║',
+  '███████║██║  ██║██║  ██║███████╗',
+  '╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝',
 ];
 
 // 256-color middle grays - visible on both light and dark backgrounds
@@ -68,44 +68,44 @@ function showBanner(): void {
   console.log(`${DIM}The open agent skills ecosystem${RESET}`);
   console.log();
   console.log(
-    `  ${DIM}$${RESET} ${TEXT}npx skills add ${DIM}<package>${RESET}        ${DIM}Add a new skill${RESET}`
+    `  ${DIM}$${RESET} ${TEXT}npx aax add ${DIM}<package>${RESET}        ${DIM}Add a new skill${RESET}`
   );
   console.log(
-    `  ${DIM}$${RESET} ${TEXT}npx skills remove${RESET}               ${DIM}Remove installed skills${RESET}`
+    `  ${DIM}$${RESET} ${TEXT}npx aax remove${RESET}               ${DIM}Remove installed skills${RESET}`
   );
   console.log(
-    `  ${DIM}$${RESET} ${TEXT}npx skills list${RESET}                 ${DIM}List installed skills${RESET}`
+    `  ${DIM}$${RESET} ${TEXT}npx aax list${RESET}                 ${DIM}List installed skills${RESET}`
   );
   console.log(
-    `  ${DIM}$${RESET} ${TEXT}npx skills find ${DIM}[query]${RESET}         ${DIM}Search for skills${RESET}`
+    `  ${DIM}$${RESET} ${TEXT}npx aax find ${DIM}[query]${RESET}         ${DIM}Search for skills${RESET}`
   );
   console.log();
   console.log(
-    `  ${DIM}$${RESET} ${TEXT}npx skills check${RESET}                ${DIM}Check for updates${RESET}`
+    `  ${DIM}$${RESET} ${TEXT}npx aax check${RESET}                ${DIM}Check for updates${RESET}`
   );
   console.log(
-    `  ${DIM}$${RESET} ${TEXT}npx skills update${RESET}               ${DIM}Update all skills${RESET}`
+    `  ${DIM}$${RESET} ${TEXT}npx aax update${RESET}               ${DIM}Update all skills${RESET}`
   );
   console.log();
   console.log(
-    `  ${DIM}$${RESET} ${TEXT}npx skills experimental_install${RESET} ${DIM}Restore from skills-lock.json${RESET}`
+    `  ${DIM}$${RESET} ${TEXT}npx aax experimental_install${RESET} ${DIM}Restore from skills-lock.json${RESET}`
   );
   console.log(
-    `  ${DIM}$${RESET} ${TEXT}npx skills init ${DIM}[name]${RESET}          ${DIM}Create a new skill${RESET}`
+    `  ${DIM}$${RESET} ${TEXT}npx aax init ${DIM}[name]${RESET}          ${DIM}Create a new skill${RESET}`
   );
   console.log(
-    `  ${DIM}$${RESET} ${TEXT}npx skills experimental_sync${RESET}    ${DIM}Sync skills from node_modules${RESET}`
+    `  ${DIM}$${RESET} ${TEXT}npx aax experimental_sync${RESET}    ${DIM}Sync skills from node_modules${RESET}`
   );
   console.log();
-  console.log(`${DIM}try:${RESET} npx skills add vercel-labs/agent-skills`);
+  console.log(`${DIM}try:${RESET} npx aax add vercel-labs/agent-skills`);
   console.log();
-  console.log(`Discover more skills at ${TEXT}https://skills.sh/${RESET}`);
+  console.log(`Discover more skills at ${TEXT}https://aax.sh/${RESET}`);
   console.log();
 }
 
 function showHelp(): void {
   console.log(`
-${BOLD}Usage:${RESET} skills <command> [options]
+${BOLD}Usage:${RESET} aax <command> [options]
 
 ${BOLD}Manage Skills:${RESET}
   add <package>        Add a skill package (alias: a)
@@ -154,32 +154,32 @@ ${BOLD}Options:${RESET}
   --version, -v     Show version number
 
 ${BOLD}Examples:${RESET}
-  ${DIM}$${RESET} skills add vercel-labs/agent-skills
-  ${DIM}$${RESET} skills add vercel-labs/agent-skills -g
-  ${DIM}$${RESET} skills add vercel-labs/agent-skills --agent claude-code cursor
-  ${DIM}$${RESET} skills add vercel-labs/agent-skills --skill pr-review commit
-  ${DIM}$${RESET} skills remove                        ${DIM}# interactive remove${RESET}
-  ${DIM}$${RESET} skills remove web-design             ${DIM}# remove by name${RESET}
-  ${DIM}$${RESET} skills rm --global frontend-design
-  ${DIM}$${RESET} skills list                          ${DIM}# list project skills${RESET}
-  ${DIM}$${RESET} skills ls -g                         ${DIM}# list global skills${RESET}
-  ${DIM}$${RESET} skills ls -a claude-code             ${DIM}# filter by agent${RESET}
-  ${DIM}$${RESET} skills find                          ${DIM}# interactive search${RESET}
-  ${DIM}$${RESET} skills find typescript               ${DIM}# search by keyword${RESET}
-  ${DIM}$${RESET} skills check
-  ${DIM}$${RESET} skills update
-  ${DIM}$${RESET} skills experimental_install            ${DIM}# restore from skills-lock.json${RESET}
-  ${DIM}$${RESET} skills init my-skill
-  ${DIM}$${RESET} skills experimental_sync              ${DIM}# sync from node_modules${RESET}
-  ${DIM}$${RESET} skills experimental_sync -y           ${DIM}# sync without prompts${RESET}
+  ${DIM}$${RESET} aax add vercel-labs/agent-skills
+  ${DIM}$${RESET} aax add vercel-labs/agent-skills -g
+  ${DIM}$${RESET} aax add vercel-labs/agent-skills --agent claude-code cursor
+  ${DIM}$${RESET} aax add vercel-labs/agent-skills --skill pr-review commit
+  ${DIM}$${RESET} aax remove                        ${DIM}# interactive remove${RESET}
+  ${DIM}$${RESET} aax remove web-design             ${DIM}# remove by name${RESET}
+  ${DIM}$${RESET} aax rm --global frontend-design
+  ${DIM}$${RESET} aax list                          ${DIM}# list project skills${RESET}
+  ${DIM}$${RESET} aax ls -g                         ${DIM}# list global skills${RESET}
+  ${DIM}$${RESET} aax ls -a claude-code             ${DIM}# filter by agent${RESET}
+  ${DIM}$${RESET} aax find                          ${DIM}# interactive search${RESET}
+  ${DIM}$${RESET} aax find typescript               ${DIM}# search by keyword${RESET}
+  ${DIM}$${RESET} aax check
+  ${DIM}$${RESET} aax update
+  ${DIM}$${RESET} aax experimental_install            ${DIM}# restore from skills-lock.json${RESET}
+  ${DIM}$${RESET} aax init my-skill
+  ${DIM}$${RESET} aax experimental_sync              ${DIM}# sync from node_modules${RESET}
+  ${DIM}$${RESET} aax experimental_sync -y           ${DIM}# sync without prompts${RESET}
 
-Discover more skills at ${TEXT}https://skills.sh/${RESET}
+Discover more skills at ${TEXT}https://aax.sh/${RESET}
 `);
 }
 
 function showRemoveHelp(): void {
   console.log(`
-${BOLD}Usage:${RESET} skills remove [skills...] [options]
+${BOLD}Usage:${RESET} aax remove [skills...] [options]
 
 ${BOLD}Description:${RESET}
   Remove installed skills from agents. If no skill names are provided,
@@ -196,15 +196,15 @@ ${BOLD}Options:${RESET}
   --all              Shorthand for --skill '*' --agent '*' -y
 
 ${BOLD}Examples:${RESET}
-  ${DIM}$${RESET} skills remove                           ${DIM}# interactive selection${RESET}
-  ${DIM}$${RESET} skills remove my-skill                   ${DIM}# remove specific skill${RESET}
-  ${DIM}$${RESET} skills remove skill1 skill2 -y           ${DIM}# remove multiple skills${RESET}
-  ${DIM}$${RESET} skills remove --global my-skill          ${DIM}# remove from global scope${RESET}
-  ${DIM}$${RESET} skills rm --agent claude-code my-skill   ${DIM}# remove from specific agent${RESET}
-  ${DIM}$${RESET} skills remove --all                      ${DIM}# remove all skills${RESET}
-  ${DIM}$${RESET} skills remove --skill '*' -a cursor      ${DIM}# remove all skills from cursor${RESET}
+  ${DIM}$${RESET} aax remove                           ${DIM}# interactive selection${RESET}
+  ${DIM}$${RESET} aax remove my-skill                   ${DIM}# remove specific skill${RESET}
+  ${DIM}$${RESET} aax remove skill1 skill2 -y           ${DIM}# remove multiple skills${RESET}
+  ${DIM}$${RESET} aax remove --global my-skill          ${DIM}# remove from global scope${RESET}
+  ${DIM}$${RESET} aax rm --agent claude-code my-skill   ${DIM}# remove from specific agent${RESET}
+  ${DIM}$${RESET} aax remove --all                      ${DIM}# remove all skills${RESET}
+  ${DIM}$${RESET} aax remove --skill '*' -a cursor      ${DIM}# remove all skills from cursor${RESET}
 
-Discover more skills at ${TEXT}https://skills.sh/${RESET}
+Discover more skills at ${TEXT}https://aax.sh/${RESET}
 `);
 }
 
@@ -261,13 +261,13 @@ Describe when this skill should be used.
   console.log();
   console.log(`${DIM}Publishing:${RESET}`);
   console.log(
-    `  ${DIM}GitHub:${RESET}  Push to a repo, then ${TEXT}npx skills add <owner>/<repo>${RESET}`
+    `  ${DIM}GitHub:${RESET}  Push to a repo, then ${TEXT}npx aax add <owner>/<repo>${RESET}`
   );
   console.log(
-    `  ${DIM}URL:${RESET}     Host the file, then ${TEXT}npx skills add https://example.com/${displayPath}${RESET}`
+    `  ${DIM}URL:${RESET}     Host the file, then ${TEXT}npx aax add https://example.com/${displayPath}${RESET}`
   );
   console.log();
-  console.log(`Browse existing skills for inspiration at ${TEXT}https://skills.sh/${RESET}`);
+  console.log(`Browse existing skills for inspiration at ${TEXT}https://aax.sh/${RESET}`);
   console.log();
 }
 
@@ -360,7 +360,7 @@ async function runCheck(args: string[] = []): Promise<void> {
 
   if (skillNames.length === 0) {
     console.log(`${DIM}No skills tracked in lock file.${RESET}`);
-    console.log(`${DIM}Install skills with${RESET} ${TEXT}npx skills add <package>${RESET}`);
+    console.log(`${DIM}Install skills with${RESET} ${TEXT}npx aax add <package>${RESET}`);
     return;
   }
 
@@ -434,7 +434,7 @@ async function runCheck(args: string[] = []): Promise<void> {
     }
     console.log();
     console.log(
-      `${DIM}Run${RESET} ${TEXT}npx skills update${RESET} ${DIM}to update all skills${RESET}`
+      `${DIM}Run${RESET} ${TEXT}npx aax update${RESET} ${DIM}to update all skills${RESET}`
     );
   }
 
@@ -462,7 +462,7 @@ async function runUpdate(): Promise<void> {
 
   if (skillNames.length === 0) {
     console.log(`${DIM}No skills tracked in lock file.${RESET}`);
-    console.log(`${DIM}Install skills with${RESET} ${TEXT}npx skills add <package>${RESET}`);
+    console.log(`${DIM}Install skills with${RESET} ${TEXT}npx aax add <package>${RESET}`);
     return;
   }
 
