@@ -41,10 +41,10 @@ describe('aax CLI', () => {
     it('should display banner', () => {
       const output = stripLogo(runCliOutput([]));
       expect(output).toContain('The open agent package manager');
-      expect(output).toContain('npx aax add');
-      expect(output).toContain('npx aax check');
-      expect(output).toContain('npx aax update');
-      expect(output).toContain('npx aax init');
+      expect(output).toContain('npx @fmatsos/aax add');
+      expect(output).toContain('npx @fmatsos/aax check');
+      expect(output).toContain('npx @fmatsos/aax update');
+      expect(output).toContain('npx @fmatsos/aax init');
       expect(output).toContain('aax.sh');
     });
   });

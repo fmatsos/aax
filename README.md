@@ -11,29 +11,29 @@ Supports **OpenCode**, **Claude Code**, **Codex**, **Cursor**, and [37 more](#av
 ## Install a Skill
 
 ```bash
-npx aax add vercel-labs/agent-skills
+npx @fmatsos/aax add vercel-labs/agent-skills
 ```
 
 ### Source Formats
 
 ```bash
 # GitHub shorthand (owner/repo)
-npx aax add vercel-labs/agent-skills
+npx @fmatsos/aax add vercel-labs/agent-skills
 
 # Full GitHub URL
-npx aax add https://github.com/vercel-labs/agent-skills
+npx @fmatsos/aax add https://github.com/vercel-labs/agent-skills
 
 # Direct path to a skill in a repo
-npx aax add https://github.com/vercel-labs/agent-skills/tree/main/skills/web-design-guidelines
+npx @fmatsos/aax add https://github.com/vercel-labs/agent-skills/tree/main/skills/web-design-guidelines
 
 # GitLab URL
-npx aax add https://gitlab.com/org/repo
+npx @fmatsos/aax add https://gitlab.com/org/repo
 
 # Any git URL
-npx aax add git@github.com:vercel-labs/agent-skills.git
+npx @fmatsos/aax add git@github.com:vercel-labs/agent-skills.git
 
 # Local path
-npx aax add ./my-local-skills
+npx @fmatsos/aax add ./my-local-skills
 ```
 
 ### Options
@@ -52,28 +52,28 @@ npx aax add ./my-local-skills
 
 ```bash
 # List skills in a repository
-npx aax add vercel-labs/agent-skills --list
+npx @fmatsos/aax add vercel-labs/agent-skills --list
 
 # Install specific skills
-npx aax add vercel-labs/agent-skills --skill frontend-design --skill skill-creator
+npx @fmatsos/aax add vercel-labs/agent-skills --skill frontend-design --skill skill-creator
 
 # Install a skill with spaces in the name (must be quoted)
-npx aax add owner/repo --skill "Convex Best Practices"
+npx @fmatsos/aax add owner/repo --skill "Convex Best Practices"
 
 # Install to specific agents
-npx aax add vercel-labs/agent-skills -a claude-code -a opencode
+npx @fmatsos/aax add vercel-labs/agent-skills -a claude-code -a opencode
 
 # Non-interactive installation (CI/CD friendly)
-npx aax add vercel-labs/agent-skills --skill frontend-design -g -a claude-code -y
+npx @fmatsos/aax add vercel-labs/agent-skills --skill frontend-design -g -a claude-code -y
 
 # Install all skills from a repo to all agents
-npx aax add vercel-labs/agent-skills --all
+npx @fmatsos/aax add vercel-labs/agent-skills --all
 
 # Install all skills to specific agents
-npx aax add vercel-labs/agent-skills --skill '*' -a claude-code
+npx @fmatsos/aax add vercel-labs/agent-skills --skill '*' -a claude-code
 
 # Install specific skills to all agents
-npx aax add vercel-labs/agent-skills --agent '*' --skill frontend-design
+npx @fmatsos/aax add vercel-labs/agent-skills --agent '*' --skill frontend-design
 ```
 
 ### Installation Scope
@@ -96,12 +96,12 @@ When installing interactively, you can choose:
 
 | Command                      | Description                                    |
 | ---------------------------- | ---------------------------------------------- |
-| `npx aax list`            | List installed skills (alias: `ls`)            |
-| `npx aax find [query]`    | Search for skills interactively or by keyword  |
-| `npx aax remove [skills]` | Remove installed skills from agents            |
-| `npx aax check`           | Check for available skill updates              |
-| `npx aax update`          | Update all installed skills to latest versions |
-| `npx aax init [name]`     | Create a new SKILL.md template                 |
+| `npx @fmatsos/aax list`            | List installed skills (alias: `ls`)            |
+| `npx @fmatsos/aax find [query]`    | Search for skills interactively or by keyword  |
+| `npx @fmatsos/aax remove [skills]` | Remove installed skills from agents            |
+| `npx @fmatsos/aax check`           | Check for available skill updates              |
+| `npx @fmatsos/aax update`          | Update all installed skills to latest versions |
+| `npx @fmatsos/aax init [name]`     | Create a new SKILL.md template                 |
 
 ### `skills list`
 
@@ -109,13 +109,13 @@ List all installed skills. Similar to `npm ls`.
 
 ```bash
 # List all installed skills (project and global)
-npx aax list
+npx @fmatsos/aax list
 
 # List only global skills
-npx aax ls -g
+npx @fmatsos/aax ls -g
 
 # Filter by specific agents
-npx aax ls -a claude-code -a cursor
+npx @fmatsos/aax ls -a claude-code -a cursor
 ```
 
 ### `skills find`
@@ -124,30 +124,30 @@ Search for skills interactively or by keyword.
 
 ```bash
 # Interactive search (fzf-style)
-npx aax find
+npx @fmatsos/aax find
 
 # Search by keyword
-npx aax find typescript
+npx @fmatsos/aax find typescript
 ```
 
 ### `skills check` / `skills update`
 
 ```bash
 # Check if any installed skills have updates
-npx aax check
+npx @fmatsos/aax check
 
 # Update all skills to latest versions
-npx aax update
+npx @fmatsos/aax update
 ```
 
 ### `skills init`
 
 ```bash
 # Create SKILL.md in current directory
-npx aax init
+npx @fmatsos/aax init
 
 # Create a new skill in a subdirectory
-npx aax init my-skill
+npx @fmatsos/aax init my-skill
 ```
 
 ### `skills remove`
@@ -156,31 +156,31 @@ Remove installed skills from agents.
 
 ```bash
 # Remove interactively (select from installed skills)
-npx aax remove
+npx @fmatsos/aax remove
 
 # Remove specific skill by name
-npx aax remove web-design-guidelines
+npx @fmatsos/aax remove web-design-guidelines
 
 # Remove multiple skills
-npx aax remove frontend-design web-design-guidelines
+npx @fmatsos/aax remove frontend-design web-design-guidelines
 
 # Remove from global scope
-npx aax remove --global web-design-guidelines
+npx @fmatsos/aax remove --global web-design-guidelines
 
 # Remove from specific agents only
-npx aax remove --agent claude-code cursor my-skill
+npx @fmatsos/aax remove --agent claude-code cursor my-skill
 
 # Remove all installed skills without confirmation
-npx aax remove --all
+npx @fmatsos/aax remove --all
 
 # Remove all skills from a specific agent
-npx aax remove --skill '*' -a cursor
+npx @fmatsos/aax remove --skill '*' -a cursor
 
 # Remove a specific skill from all agents
-npx aax remove my-skill --agent '*'
+npx @fmatsos/aax remove my-skill --agent '*'
 
 # Use 'rm' alias
-npx aax rm my-skill
+npx @fmatsos/aax rm my-skill
 ```
 
 | Option         | Description                                      |
@@ -411,7 +411,7 @@ Ensure you have write access to the target directory.
 
 ```bash
 # Install internal skills
-INSTALL_INTERNAL_SKILLS=1 npx aax add vercel-labs/agent-skills --list
+INSTALL_INTERNAL_SKILLS=1 npx @fmatsos/aax add vercel-labs/agent-skills --list
 ```
 
 ## Telemetry

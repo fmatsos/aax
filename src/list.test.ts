@@ -275,7 +275,7 @@ description: A test skill
   describe('banner', () => {
     it('should include list command in banner', () => {
       const result = runCli([]);
-      expect(result.stdout).toContain('npx aax list');
+      expect(result.stdout).toContain('npx @fmatsos/aax list');
       expect(result.stdout).toContain('List installed packages');
     });
   });
