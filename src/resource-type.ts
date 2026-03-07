@@ -8,10 +8,14 @@ import type { ResourceType } from './types.ts';
  * @param options - Command options that may specify resource type flags
  * @returns The resource type to operate on
  */
-export function getResourceType(options: { skill?: unknown }): ResourceType {
+export function getResourceType(options?: unknown): ResourceType {
   // For now, we only support skills
   // In the future, this will check for --mcp, --instruction, --hook flags
   // and return the appropriate resource type
+  // Example future logic:
+  // if (options && typeof options === 'object' && 'mcp' in options) return 'mcp';
+  // if (options && typeof options === 'object' && 'instruction' in options) return 'instruction';
+  // if (options && typeof options === 'object' && 'hook' in options) return 'hook';
 
   // Default to 'skill' for backward compatibility
   return 'skill';
