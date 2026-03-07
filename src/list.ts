@@ -4,7 +4,7 @@ import { agents } from './agents.ts';
 import { listInstalledSkills, type InstalledSkill } from './installer.ts';
 import { getAllLockedSkills } from './skill-lock.ts';
 import {
-  getResourceType,
+  parseResourceType,
   validateResourceType,
   getResourceTypeDisplayName,
 } from './resource-type.ts';
@@ -66,12 +66,12 @@ export function parseListOptions(args: string[]): ListOptions {
   return options;
 }
 
-export async function runList(args: string[]): Promise<void> {
-  const options = parseListOptions(args);
-
-  // Determine and validate resource type
-  const resourceType = getResourceType(options);
+export async function runList(args: string[], resourceTypeArg?: string): Promise<void> {
+  // Parse and validate resource type from subcommand
+  const resourceType = parseResourceType(resourceTypeArg);
   validateResourceType(resourceType);
+
+  const options = parseListOptions(args);
 
   // Default to project only (local), use -g for global
   const scope = options.global === true ? true : false;

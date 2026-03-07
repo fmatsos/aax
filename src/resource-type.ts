@@ -1,24 +1,38 @@
 import type { ResourceType } from './types.ts';
 
 /**
- * Get the resource type for a command operation.
- * Currently defaults to 'skill' as it's the only implemented resource type.
- * Future resource types (mcp, instruction, hook) will be added here.
+ * Parse resource type from subcommand string.
+ * Validates the resource type is one of the supported types.
  *
- * @param options - Command options that may specify resource type flags
- * @returns The resource type to operate on
+ * @param subcommand - The subcommand string (e.g., 'skill', 'mcp', 'hook')
+ * @returns The validated resource type
+ * @throws Error if subcommand is not a valid resource type
  */
-export function getResourceType(options?: unknown): ResourceType {
-  // For now, we only support skills
-  // In the future, this will check for --mcp, --instruction, --hook flags
-  // and return the appropriate resource type
-  // Example future logic:
-  // if (options && typeof options === 'object' && 'mcp' in options) return 'mcp';
-  // if (options && typeof options === 'object' && 'instruction' in options) return 'instruction';
-  // if (options && typeof options === 'object' && 'hook' in options) return 'hook';
+export function parseResourceType(subcommand: string | undefined): ResourceType {
+  if (!subcommand) {
+    throw new Error(
+      'Resource type is required. Use: skill, mcp, instruction, or hook\n' +
+        'Examples:\n' +
+        '  aax add skill <source>\n' +
+        '  aax remove skill <name>\n' +
+        '  aax list skill'
+    );
+  }
 
-  // Default to 'skill' for backward compatibility
-  return 'skill';
+  const validTypes: ResourceType[] = ['skill', 'mcp', 'instruction', 'hook'];
+
+  if (!validTypes.includes(subcommand as ResourceType)) {
+    throw new Error(
+      `Invalid resource type: '${subcommand}'\n` +
+        `Valid types: ${validTypes.join(', ')}\n` +
+        'Examples:\n' +
+        '  aax add skill <source>\n' +
+        '  aax remove mcp <name>\n' +
+        '  aax list hook'
+    );
+  }
+
+  return subcommand as ResourceType;
 }
 
 /**

@@ -13,7 +13,7 @@ import {
   sanitizeName,
 } from './installer.ts';
 import {
-  getResourceType,
+  parseResourceType,
   validateResourceType,
   getResourceTypeDisplayName,
 } from './resource-type.ts';
@@ -23,11 +23,13 @@ export interface RemoveOptions {
   agent?: string[];
   yes?: boolean;
   all?: boolean;
+  /** Internal: resource type from subcommand position */
+  _resourceType?: string;
 }
 
 export async function removeCommand(skillNames: string[], options: RemoveOptions) {
-  // Determine and validate resource type
-  const resourceType = getResourceType(options);
+  // Parse and validate resource type from subcommand
+  const resourceType = parseResourceType(options._resourceType);
   validateResourceType(resourceType);
 
   const isGlobal = options.global ?? false;
