@@ -93,7 +93,7 @@ POST to `https://add-skill.vercel.sh/check-updates`:
 For each skill with updates:
 
 1. Build reinstall URL with skill path
-2. Run `npx aax add <url> -g -y`
+2. Run `npx @fmatsos/aax add <url> -g -y`
 3. Track success/failure
 4. Update lock file
 

@@ -14,6 +14,7 @@ import { removeCommand, parseRemoveOptions } from './remove.ts';
 import { runSync, parseSyncOptions } from './sync.ts';
 import { track } from './telemetry.ts';
 import { fetchSkillFolderHash, getGitHubToken } from './skill-lock.ts';
+import { AAX_NPX_INVOCATION } from './constants.ts';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -68,36 +69,36 @@ function showBanner(): void {
   console.log(`${DIM}The open agent package manager${RESET}`);
   console.log();
   console.log(
-    `  ${DIM}$${RESET} ${TEXT}npx aax add ${DIM}<package>${RESET}        ${DIM}Add a new package${RESET}`
+    `  ${DIM}$${RESET} ${TEXT}${AAX_NPX_INVOCATION} add ${DIM}<package>${RESET}        ${DIM}Add a new package${RESET}`
   );
   console.log(
-    `  ${DIM}$${RESET} ${TEXT}npx aax remove${RESET}               ${DIM}Remove installed packages${RESET}`
+    `  ${DIM}$${RESET} ${TEXT}${AAX_NPX_INVOCATION} remove${RESET}               ${DIM}Remove installed packages${RESET}`
   );
   console.log(
-    `  ${DIM}$${RESET} ${TEXT}npx aax list${RESET}                 ${DIM}List installed packages${RESET}`
+    `  ${DIM}$${RESET} ${TEXT}${AAX_NPX_INVOCATION} list${RESET}                 ${DIM}List installed packages${RESET}`
   );
   console.log(
-    `  ${DIM}$${RESET} ${TEXT}npx aax find ${DIM}[query]${RESET}         ${DIM}Search for packages${RESET}`
+    `  ${DIM}$${RESET} ${TEXT}${AAX_NPX_INVOCATION} find ${DIM}[query]${RESET}         ${DIM}Search for packages${RESET}`
   );
   console.log();
   console.log(
-    `  ${DIM}$${RESET} ${TEXT}npx aax check${RESET}                ${DIM}Check for updates${RESET}`
+    `  ${DIM}$${RESET} ${TEXT}${AAX_NPX_INVOCATION} check${RESET}                ${DIM}Check for updates${RESET}`
   );
   console.log(
-    `  ${DIM}$${RESET} ${TEXT}npx aax update${RESET}               ${DIM}Update all packages${RESET}`
+    `  ${DIM}$${RESET} ${TEXT}${AAX_NPX_INVOCATION} update${RESET}               ${DIM}Update all packages${RESET}`
   );
   console.log();
   console.log(
-    `  ${DIM}$${RESET} ${TEXT}npx aax experimental_install${RESET} ${DIM}Restore from lock file${RESET}`
+    `  ${DIM}$${RESET} ${TEXT}${AAX_NPX_INVOCATION} experimental_install${RESET} ${DIM}Restore from lock file${RESET}`
   );
   console.log(
-    `  ${DIM}$${RESET} ${TEXT}npx aax init ${DIM}[name]${RESET}          ${DIM}Create a new package${RESET}`
+    `  ${DIM}$${RESET} ${TEXT}${AAX_NPX_INVOCATION} init ${DIM}[name]${RESET}          ${DIM}Create a new package${RESET}`
   );
   console.log(
-    `  ${DIM}$${RESET} ${TEXT}npx aax experimental_sync${RESET}    ${DIM}Sync packages from node_modules${RESET}`
+    `  ${DIM}$${RESET} ${TEXT}${AAX_NPX_INVOCATION} experimental_sync${RESET}    ${DIM}Sync packages from node_modules${RESET}`
   );
   console.log();
-  console.log(`${DIM}try:${RESET} npx aax add vercel-labs/agent-skills`);
+  console.log(`${DIM}try:${RESET} ${AAX_NPX_INVOCATION} add vercel-labs/agent-skills`);
   console.log();
   console.log(`Discover more packages at ${TEXT}https://aax.sh/${RESET}`);
   console.log();
@@ -258,10 +259,10 @@ Describe when this skill should be used.
   console.log();
   console.log(`${DIM}Publishing:${RESET}`);
   console.log(
-    `  ${DIM}GitHub:${RESET}  Push to a repo, then ${TEXT}npx aax add <owner>/<repo>${RESET}`
+    `  ${DIM}GitHub:${RESET}  Push to a repo, then ${TEXT}${AAX_NPX_INVOCATION} add <owner>/<repo>${RESET}`
   );
   console.log(
-    `  ${DIM}URL:${RESET}     Host the file, then ${TEXT}npx aax add https://example.com/${displayPath}${RESET}`
+    `  ${DIM}URL:${RESET}     Host the file, then ${TEXT}${AAX_NPX_INVOCATION} add https://example.com/${displayPath}${RESET}`
   );
   console.log();
   console.log(`Browse existing skills for inspiration at ${TEXT}https://aax.sh/${RESET}`);
@@ -357,7 +358,9 @@ async function runCheck(args: string[] = []): Promise<void> {
 
   if (skillNames.length === 0) {
     console.log(`${DIM}No skills tracked in lock file.${RESET}`);
-    console.log(`${DIM}Install skills with${RESET} ${TEXT}npx aax add <package>${RESET}`);
+    console.log(
+      `${DIM}Install skills with${RESET} ${TEXT}${AAX_NPX_INVOCATION} add <package>${RESET}`
+    );
     return;
   }
 
@@ -431,7 +434,7 @@ async function runCheck(args: string[] = []): Promise<void> {
     }
     console.log();
     console.log(
-      `${DIM}Run${RESET} ${TEXT}npx aax update${RESET} ${DIM}to update all skills${RESET}`
+      `${DIM}Run${RESET} ${TEXT}${AAX_NPX_INVOCATION} update${RESET} ${DIM}to update all skills${RESET}`
     );
   }
 
@@ -459,7 +462,9 @@ async function runUpdate(): Promise<void> {
 
   if (skillNames.length === 0) {
     console.log(`${DIM}No skills tracked in lock file.${RESET}`);
-    console.log(`${DIM}Install skills with${RESET} ${TEXT}npx aax add <package>${RESET}`);
+    console.log(
+      `${DIM}Install skills with${RESET} ${TEXT}${AAX_NPX_INVOCATION} add <package>${RESET}`
+    );
     return;
   }
 

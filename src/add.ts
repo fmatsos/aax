@@ -10,6 +10,7 @@ import {
   validateResourceType,
   getResourceTypeDisplayName,
 } from './resource-type.ts';
+import { AAX_NPX_INVOCATION } from './constants.ts';
 
 // Helper to check if a value is a cancel symbol (works with both clack and our custom prompts)
 const isCancelled = (value: unknown): value is symbol => typeof value === 'symbol';
@@ -905,10 +906,14 @@ export async function runAdd(args: string[], options: AddOptions = {}): Promise<
     );
     console.log();
     console.log(pc.dim('  Usage:'));
-    console.log(`    ${pc.cyan('npx aax add')} ${pc.yellow('<source>')} ${pc.dim('[options]')}`);
+    console.log(
+      `    ${pc.cyan(`${AAX_NPX_INVOCATION} add`)} ${pc.yellow('<source>')} ${pc.dim('[options]')}`
+    );
     console.log();
     console.log(pc.dim('  Example:'));
-    console.log(`    ${pc.cyan('npx aax add')} ${pc.yellow('vercel-labs/agent-skills')}`);
+    console.log(
+      `    ${pc.cyan(`${AAX_NPX_INVOCATION} add`)} ${pc.yellow('vercel-labs/agent-skills')}`
+    );
     console.log();
     process.exit(1);
   }
@@ -1736,13 +1741,17 @@ async function promptForFindSkills(
         });
       } catch {
         p.log.warn('Failed to install find-skills. You can try again with:');
-        p.log.message(pc.dim('  npx aax add vercel-labs/skills@find-skills -g -y --all'));
+        p.log.message(
+          pc.dim(`  ${AAX_NPX_INVOCATION} add vercel-labs/skills@find-skills -g -y --all`)
+        );
       }
     } else {
       // User declined - dismiss the prompt
       await dismissPrompt('findSkillsPrompt');
       p.log.message(
-        pc.dim('You can install it later with: npx aax add vercel-labs/skills@find-skills')
+        pc.dim(
+          `You can install it later with: ${AAX_NPX_INVOCATION} add vercel-labs/skills@find-skills`
+        )
       );
     }
   } catch {
