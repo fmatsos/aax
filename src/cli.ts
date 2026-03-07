@@ -105,103 +105,99 @@ function showBanner(): void {
 
 function showHelp(): void {
   console.log(`
-${BOLD}Usage:${RESET} aax <command> [options]
+${BOLD}Usage:${RESET} aax <command> <resource-type> [arguments] [options]
 
-${BOLD}Manage Packages:${RESET}
-  add <package>        Add a package (alias: a)
-                       e.g. vercel-labs/agent-skills
-                            https://github.com/vercel-labs/agent-skills
-  remove [packages]    Remove installed packages
-  list, ls             List installed packages
-  find [query]         Search for packages interactively
+${BOLD}Resource Types:${RESET}
+  skill            Agent skills (currently supported)
+  mcp              MCP servers (planned)
+  instruction      Instructions/rules (planned)
+  hook             Hooks (planned)
+
+${BOLD}Manage Resources:${RESET}
+  add <type> <source>       Add a resource
+  remove <type> [names]     Remove installed resources
+  list <type>               List installed resources
+  find [query]              Search for resources interactively
 
 ${BOLD}Updates:${RESET}
-  check                Check for available updates
-  update               Update all packages to latest versions
+  check                     Check for available updates
+  update                    Update all resources to latest versions
 
 ${BOLD}Project:${RESET}
-  experimental_install Restore packages from lock file
-  init [name]          Initialize a package (creates <name>/SKILL.md or ./SKILL.md)
-  experimental_sync    Sync packages from node_modules into agent directories
+  experimental_install      Restore resources from lock file
+  init [name]               Initialize a resource (creates <name>/SKILL.md or ./SKILL.md)
+  experimental_sync         Sync resources from node_modules into agent directories
 
-${BOLD}Add Options:${RESET}
-  -g, --global           Install globally (user-level) instead of project-level
-  -a, --agent <agents>   Specify agents to install to (use '*' for all agents)
-  -s, --skill <skills>   Specify package names to install (use '*' for all)
-  -l, --list             List available packages in the repository without installing
-  -y, --yes              Skip confirmation prompts
-  --copy                 Copy files instead of symlinking to agent directories
-  --all                  Shorthand for --skill '*' --agent '*' -y
-  --full-depth           Search all subdirectories even when a root SKILL.md exists
-
-${BOLD}Remove Options:${RESET}
-  -g, --global           Remove from global scope
-  -a, --agent <agents>   Remove from specific agents (use '*' for all agents)
-  -s, --skill <skills>   Specify packages to remove (use '*' for all)
-  -y, --yes              Skip confirmation prompts
-  --all                  Shorthand for --skill '*' --agent '*' -y
-
-${BOLD}Experimental Sync Options:${RESET}
-  -a, --agent <agents>   Specify agents to install to (use '*' for all agents)
-  -y, --yes              Skip confirmation prompts
-
-${BOLD}List Options:${RESET}
-  -g, --global           List global packages (default: project)
-  -a, --agent <agents>   Filter by specific agents
-
-${BOLD}Options:${RESET}
-  --help, -h        Show this help message
-  --version, -v     Show version number
+${BOLD}Global Options:${RESET}
+  -g, --global              Operate at user-level instead of project-level
+  -a, --agent <agents>      Specify agents to target (use '*' for all agents)
+  -y, --yes                 Skip confirmation prompts
+  --copy                    Copy files instead of symlinking
+  --help, -h                Show help message
+  --version, -v             Show version number
 
 ${BOLD}Examples:${RESET}
-  ${DIM}$${RESET} aax add vercel-labs/agent-skills
-  ${DIM}$${RESET} aax add vercel-labs/agent-skills -g
-  ${DIM}$${RESET} aax add vercel-labs/agent-skills --agent claude-code cursor
-  ${DIM}$${RESET} aax add vercel-labs/agent-skills --skill pr-review commit
-  ${DIM}$${RESET} aax remove                        ${DIM}# interactive remove${RESET}
-  ${DIM}$${RESET} aax remove web-design             ${DIM}# remove by name${RESET}
-  ${DIM}$${RESET} aax rm --global frontend-design
-  ${DIM}$${RESET} aax list                          ${DIM}# list project packages${RESET}
-  ${DIM}$${RESET} aax ls -g                         ${DIM}# list global packages${RESET}
-  ${DIM}$${RESET} aax ls -a claude-code             ${DIM}# filter by agent${RESET}
-  ${DIM}$${RESET} aax find                          ${DIM}# interactive search${RESET}
-  ${DIM}$${RESET} aax find typescript               ${DIM}# search by keyword${RESET}
+  ${DIM}# Add a skill${RESET}
+  ${DIM}$${RESET} aax add skill vercel-labs/agent-skills
+  ${DIM}$${RESET} aax add skill vercel-labs/agent-skills -g
+  ${DIM}$${RESET} aax add skill vercel-labs/agent-skills --agent claude-code cursor
+  ${DIM}$${RESET} aax add skill vercel-labs/agent-skills --skill pr-review commit
+
+  ${DIM}# Remove skills${RESET}
+  ${DIM}$${RESET} aax remove skill                   ${DIM}# interactive${RESET}
+  ${DIM}$${RESET} aax remove skill web-design        ${DIM}# by name${RESET}
+  ${DIM}$${RESET} aax remove skill frontend-design --global
+
+  ${DIM}# List resources${RESET}
+  ${DIM}$${RESET} aax list skill                     ${DIM}# list project skills${RESET}
+  ${DIM}$${RESET} aax list skill -g                  ${DIM}# list global skills${RESET}
+  ${DIM}$${RESET} aax list skill -a claude-code      ${DIM}# filter by agent${RESET}
+
+  ${DIM}# Search and manage${RESET}
+  ${DIM}$${RESET} aax find                           ${DIM}# interactive search${RESET}
+  ${DIM}$${RESET} aax find typescript                ${DIM}# search by keyword${RESET}
   ${DIM}$${RESET} aax check
   ${DIM}$${RESET} aax update
-  ${DIM}$${RESET} aax experimental_install            ${DIM}# restore from skills-lock.json${RESET}
+
+  ${DIM}# Project setup${RESET}
+  ${DIM}$${RESET} aax experimental_install           ${DIM}# restore from lock file${RESET}
   ${DIM}$${RESET} aax init my-skill
   ${DIM}$${RESET} aax experimental_sync              ${DIM}# sync from node_modules${RESET}
-  ${DIM}$${RESET} aax experimental_sync -y           ${DIM}# sync without prompts${RESET}
 
-Discover more packages at ${TEXT}https://aax.sh/${RESET}
+Discover more at ${TEXT}https://aax.sh/${RESET}
 `);
 }
 
 function showRemoveHelp(): void {
   console.log(`
-${BOLD}Usage:${RESET} aax remove [packages...] [options]
+${BOLD}Usage:${RESET} aax remove <resource-type> [names...] [options]
 
 ${BOLD}Description:${RESET}
-  Remove installed packages from agents. If no package names are provided,
+  Remove installed resources from agents. If no names are provided,
   an interactive selection menu will be shown.
 
+${BOLD}Resource Types:${RESET}
+  skill            Agent skills
+  mcp              MCP servers (planned)
+  instruction      Instructions (planned)
+  hook             Hooks (planned)
+
 ${BOLD}Arguments:${RESET}
-  packages          Optional package names to remove (space-separated)
+  names             Optional resource names to remove (space-separated)
 
 ${BOLD}Options:${RESET}
-  -g, --global       Remove from global scope (~/) instead of project scope
-  -a, --agent        Remove from specific agents (use '*' for all agents)
-  -s, --skill        Specify packages to remove (use '*' for all)
-  -y, --yes          Skip confirmation prompts
-  --all              Shorthand for --skill '*' --agent '*' -y
+  -g, --global      Remove from global scope (~/) instead of project scope
+  -a, --agent       Remove from specific agents (use '*' for all agents)
+  -y, --yes         Skip confirmation prompts
+  --all             Remove all resources
 
 ${BOLD}Examples:${RESET}
-  ${DIM}$${RESET} aax remove                           ${DIM}# interactive selection${RESET}
-  ${DIM}$${RESET} aax remove my-package                ${DIM}# remove specific package${RESET}
-  ${DIM}$${RESET} aax remove pkg1 pkg2 -y              ${DIM}# remove multiple packages${RESET}
-  ${DIM}$${RESET} aax remove --global my-package       ${DIM}# remove from global scope${RESET}
-  ${DIM}$${RESET} aax rm --agent claude-code my-package ${DIM}# remove from specific agent${RESET}
-  ${DIM}$${RESET} aax remove --all                     ${DIM}# remove all packages${RESET}
+  ${DIM}$${RESET} aax remove skill                      ${DIM}# interactive selection${RESET}
+  ${DIM}$${RESET} aax remove skill my-skill             ${DIM}# remove specific skill${RESET}
+  ${DIM}$${RESET} aax remove skill skill1 skill2 -y     ${DIM}# remove multiple skills${RESET}
+  ${DIM}$${RESET} aax remove skill my-skill --global    ${DIM}# remove from global scope${RESET}
+  ${DIM}$${RESET} aax rm skill my-skill --agent claude-code ${DIM}# remove from specific agent${RESET}
+  ${DIM}$${RESET} aax remove skill --all                ${DIM}# remove all skills${RESET}
   ${DIM}$${RESET} aax remove --skill '*' -a cursor     ${DIM}# remove all packages from cursor${RESET}
 
 Discover more packages at ${TEXT}https://aax.sh/${RESET}
@@ -604,26 +600,32 @@ async function main(): Promise<void> {
       await runInstallFromLock(restArgs);
       break;
     }
-    case 'i':
-    case 'install':
-    case 'a':
     case 'add': {
+      // New subcommand structure: aax add <resource-type> <source>
+      // Example: aax add skill vercel-labs/agent-skills
       showLogo();
-      const { source: addSource, options: addOpts } = parseAddOptions(restArgs);
-      await runAdd(addSource, addOpts);
+      const resourceType = restArgs[0]; // e.g., 'skill'
+      const addArgs = restArgs.slice(1); // remaining args after resource type
+      const { source: addSource, options: addOpts } = parseAddOptions(addArgs);
+      // Pass resource type to runAdd
+      await runAdd(addSource, { ...addOpts, _resourceType: resourceType });
       break;
     }
     case 'remove':
-    case 'rm':
-    case 'r':
+    case 'rm': {
+      // New subcommand structure: aax remove <resource-type> <name>
+      // Example: aax remove skill my-skill
       // Check for --help or -h flag
       if (restArgs.includes('--help') || restArgs.includes('-h')) {
         showRemoveHelp();
         break;
       }
-      const { skills, options: removeOptions } = parseRemoveOptions(restArgs);
-      await removeCommand(skills, removeOptions);
+      const resourceType = restArgs[0]; // e.g., 'skill'
+      const removeArgs = restArgs.slice(1); // remaining args after resource type
+      const { skills, options: removeOptions } = parseRemoveOptions(removeArgs);
+      await removeCommand(skills, { ...removeOptions, _resourceType: resourceType });
       break;
+    }
     case 'experimental_sync': {
       showLogo();
       const { options: syncOptions } = parseSyncOptions(restArgs);
@@ -631,9 +633,14 @@ async function main(): Promise<void> {
       break;
     }
     case 'list':
-    case 'ls':
-      await runList(restArgs);
+    case 'ls': {
+      // New subcommand structure: aax list <resource-type>
+      // Example: aax list skill
+      const resourceType = restArgs[0]; // e.g., 'skill'
+      const listArgs = restArgs.slice(1); // remaining args after resource type
+      await runList(listArgs, resourceType);
       break;
+    }
     case 'check':
       runCheck(restArgs);
       break;
@@ -652,7 +659,7 @@ async function main(): Promise<void> {
 
     default:
       console.log(`Unknown command: ${command}`);
-      console.log(`Run ${BOLD}skills --help${RESET} for usage.`);
+      console.log(`Run ${BOLD}aax --help${RESET} for usage.`);
   }
 }
 

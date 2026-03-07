@@ -6,7 +6,7 @@ import { sep } from 'path';
 import { parseSource, getOwnerRepo, parseOwnerRepo, isRepoPrivate } from './source-parser.ts';
 import { searchMultiselect, cancelSymbol } from './prompts/search-multiselect.ts';
 import {
-  getResourceType,
+  parseResourceType,
   validateResourceType,
   getResourceTypeDisplayName,
 } from './resource-type.ts';
@@ -422,6 +422,8 @@ export interface AddOptions {
   all?: boolean;
   fullDepth?: boolean;
   copy?: boolean;
+  /** Internal: resource type from subcommand position */
+  _resourceType?: string;
 }
 
 /**
@@ -881,8 +883,8 @@ async function handleWellKnownSkills(
 }
 
 export async function runAdd(args: string[], options: AddOptions = {}): Promise<void> {
-  // Determine and validate resource type
-  const resourceType = getResourceType(options);
+  // Parse and validate resource type from subcommand
+  const resourceType = parseResourceType(options._resourceType);
   validateResourceType(resourceType);
 
   const source = args[0];
