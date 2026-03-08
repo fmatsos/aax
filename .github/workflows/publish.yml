@@ -7,6 +7,7 @@ on:
       - 'v*'
     paths-ignore:
       - '**/*.md'
+      - 'package.json'
   workflow_dispatch:
     inputs:
       bump:
@@ -16,6 +17,7 @@ on:
         options:
           - patch
           - minor
+          - major
 
 jobs:
   publish:
@@ -79,7 +81,10 @@ jobs:
           echo "$COMMITS"
 
           # Check for explicit version bump markers
-          if echo "$COMMITS" | grep -q "\[minor\]"; then
+          if echo "$COMMITS" | grep -q "\[major\]"; then
+            echo "bump=major" >> $GITHUB_OUTPUT
+            echo "Found [major] - will bump major version"
+          elif echo "$COMMITS" | grep -q "\[minor\]"; then
             echo "bump=minor" >> $GITHUB_OUTPUT
             echo "Found [minor] - will bump minor version"
           elif echo "$COMMITS" | grep -q "\[patch\]"; then
@@ -114,12 +119,20 @@ jobs:
           git push
           git push --tags
 
-      - name: Publish to npm
+      - name: Publish to npm (npmjs.org)
         id: publish
         if: steps.version.outputs.bump != 'none'
         run: npm publish --provenance --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Publish to GitHub Packages
+        if: steps.publish.outcome == 'success'
+        run: |
+          npm config set registry https://npm.pkg.github.com
+          npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Create GitHub Release
         if: steps.publish.outcome == 'success'
@@ -146,7 +159,11 @@ jobs:
 
           # Generate release notes from template
           export VERSION CHANGELOG CONTRIBUTORS
-          envsubst < .github/RELEASE_TEMPLATE.md > release-notes.md
+          if [ -f .github/RELEASE_TEMPLATE.md ]; then
+            envsubst < .github/RELEASE_TEMPLATE.md > release-notes.md
+          else
+            echo -e "## v${VERSION}\n\n${CHANGELOG}\n\n**Contributors:** ${CONTRIBUTORS}" > release-notes.md
+          fi
 
           gh release create "v${VERSION}" --notes-file release-notes.md
         env:
