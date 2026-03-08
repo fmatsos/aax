@@ -8,7 +8,9 @@ Supports **OpenCode**, **Claude Code**, **Codex**, **Cursor**, and [37 more](#av
 
 > 📚 **[Documentation](./docs/)** | 🏗️ **[Architecture](./docs/architecture/)** | 🤝 **[Contributing](./docs/development/contributing.md)**
 
-## Install a Skill
+## Quick Start
+
+### Install a Skill
 
 ```bash
 npx @fmatsos/aax add vercel-labs/agent-skills
@@ -92,13 +94,23 @@ When installing interactively, you can choose:
 | **Symlink** (Recommended) | Creates symlinks from each agent to a canonical copy. Single source of truth, easy updates. |
 | **Copy**                  | Creates independent copies for each agent. Use when symlinks aren't supported.              |
 
+### Install an Agent
+
+```bash
+npx @fmatsos/aax add agent owner/repo
+```
+
+Agents are CLI-specific configurations that customize agent behavior for different tools (Claude, Copilot, etc.). See [Agent Resources](#agent-resources) for details.
+
 ## Other Commands
 
 | Command                      | Description                                    |
 | ---------------------------- | ---------------------------------------------- |
-| `npx @fmatsos/aax list`            | List installed skills (alias: `ls`)            |
+| `npx @fmatsos/aax list skill`      | List installed skills (alias: `ls`)            |
+| `npx @fmatsos/aax list agent`      | List installed agents (coming soon)            |
 | `npx @fmatsos/aax find [query]`    | Search for skills interactively or by keyword  |
-| `npx @fmatsos/aax remove [skills]` | Remove installed skills from agents            |
+| `npx @fmatsos/aax remove skill [skills]` | Remove installed skills from agents      |
+| `npx @fmatsos/aax remove agent [agents]` | Remove installed agents (coming soon)    |
 | `npx @fmatsos/aax check`           | Check for available skill updates              |
 | `npx @fmatsos/aax update`          | Update all installed skills to latest versions |
 | `npx @fmatsos/aax init [name]`     | Create a new SKILL.md template                 |
@@ -190,6 +202,73 @@ npx @fmatsos/aax rm my-skill
 | `-s, --skill`  | Specify skills to remove (use `'*'` for all)     |
 | `-y, --yes`    | Skip confirmation prompts                        |
 | `--all`        | Shorthand for `--skill '*' --agent '*' -y`       |
+
+## Agent Resources
+
+Agents are CLI-specific configurations that extend and customize agent behaviors for different tools. Unlike skills (which are universal), agents are organized by CLI tool with frontmatter customization.
+
+### Structure
+
+Agents follow this repository structure:
+
+```
+repo/
+├── agents/                      # Base agent markdown files
+│   ├── explorer/
+│   │   └── AGENT.md            # Contains name, description, instructions
+│   └── reviewer/
+│       └── AGENT.md
+├── claude/agents/               # Claude-specific frontmatters
+│   ├── explorer.yaml
+│   └── reviewer.yaml
+└── copilot/agents/              # Copilot-specific frontmatters
+    └── explorer.yaml
+```
+
+### Installation
+
+```bash
+# List available agents grouped by CLI tool
+npx @fmatsos/aax add agent owner/repo --list
+
+# Install agents for all available CLI tools
+npx @fmatsos/aax add agent owner/repo
+
+# Install globally
+npx @fmatsos/aax add agent owner/repo --global
+```
+
+Agents are installed to:
+- **Canonical location**: `.agents/agents/` (or `~/.agents/agents/` for global)
+- **CLI-specific locations**: `.claude/agents/`, `.copilot/agents/`, etc.
+
+When an agent is available for multiple CLI tools, it's saved with a suffix (e.g., `explorer.claude.md`, `explorer.copilot.md`).
+
+### Frontmatter Merging
+
+Each CLI tool can have its own YAML frontmatter file that gets merged with the base agent. For example:
+
+**Base agent** (`agents/explorer/AGENT.md`):
+```markdown
+---
+name: explorer
+description: Explores and analyzes code
+version: 1.0
+---
+
+Instructions for exploring code...
+```
+
+**Claude frontmatter** (`claude/agents/explorer.yaml`):
+```yaml
+model: claude-3-5-sonnet
+temperature: 0.7
+tools:
+  - grep
+  - find
+```
+
+The final installed agent merges both configurations.
 
 ## What are Agent Skills?
 
