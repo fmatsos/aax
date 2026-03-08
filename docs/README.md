@@ -7,6 +7,7 @@ This directory contains comprehensive documentation for the aax CLI project, inc
 ### 📐 [Architecture](./architecture/)
 Core architectural decisions and system design:
 - [Resource Types](./architecture/resource-types.md) - Multi-resource type abstraction layer
+- [Agent Resources](./architecture/agent-resources.md) - Agent architecture and CLI-specific customization
 - [CLI Design](./architecture/cli-design.md) - Command-line interface structure and patterns
 - [Positional Arguments](./architecture/positional-arguments.md) - Resource name as positional argument feature
 - [Future Marketplace](./architecture/future-marketplace.md) - Planned marketplace integration

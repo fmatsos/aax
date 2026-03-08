@@ -9,12 +9,13 @@ The `aax` CLI has been architected to support multiple resource types beyond jus
 Currently defined resource types:
 
 ```typescript
-export type ResourceType = 'skill' | 'mcp' | 'instruction' | 'hook';
+export type ResourceType = 'skill' | 'agent' | 'mcp' | 'instruction' | 'hook';
 ```
 
 ### Current Support
 
 - ✅ **skill**: Fully implemented and supported
+- ✅ **agent**: Fully implemented and supported (CLI-specific configurations)
 - 🚧 **mcp**: Planned for future release
 - 🚧 **instruction**: Planned for future release
 - 🚧 **hook**: Planned for future release
@@ -43,6 +44,7 @@ Validates that a resource type is currently supported. Throws an error for unsup
 
 ```typescript
 validateResourceType('skill');  // ✅ OK
+validateResourceType('agent');  // ✅ OK
 validateResourceType('mcp');    // ❌ Throws: "Resource type 'mcp' is not yet supported"
 ```
 
@@ -52,6 +54,7 @@ Returns human-readable display names:
 
 ```typescript
 getResourceTypeDisplayName('skill')       // 'skill'
+getResourceTypeDisplayName('agent')       // 'agent'
 getResourceTypeDisplayName('mcp')         // 'MCP server'
 getResourceTypeDisplayName('instruction') // 'instruction'
 getResourceTypeDisplayName('hook')        // 'hook'
@@ -63,6 +66,7 @@ Returns plural forms for display:
 
 ```typescript
 getResourceTypePluralName('skill')       // 'skills'
+getResourceTypePluralName('agent')       // 'agents'
 getResourceTypePluralName('mcp')         // 'MCP servers'
 getResourceTypePluralName('instruction') // 'instructions'
 getResourceTypePluralName('hook')        // 'hooks'
@@ -167,17 +171,27 @@ To add support for a new resource type (e.g., MCP):
 ### Example Future Commands
 
 ```bash
-# MCP Servers
+# Skills (supported)
+aax add skill <source> [names...]
+aax remove skill <names...>
+aax list skill
+
+# Agents (supported)
+aax add agent <source>
+aax remove agent <names...>
+aax list agent
+
+# MCP Servers (future)
 aax add mcp <source> [names...]
 aax remove mcp <names...>
 aax list mcp
 
-# Instructions
+# Instructions (future)
 aax add instruction <source> [names...]
 aax remove instruction <names...>
 aax list instruction
 
-# Hooks
+# Hooks (future)
 aax add hook <source> [names...]
 aax remove hook <names...>
 aax list hook
