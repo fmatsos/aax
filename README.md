@@ -1,4 +1,4 @@
-# aax
+# AAX - AI Agents eXtensions
 
 The open agent package manager.
 
