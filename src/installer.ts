@@ -16,7 +16,7 @@ import { homedir, platform } from 'os';
 import type { Skill, AgentType, RemoteSkill } from './types.ts';
 import type { WellKnownSkill } from './providers/wellknown.ts';
 import { agents, detectInstalledAgents, isUniversalAgent } from './agents.ts';
-import { AGENTS_DIR, SKILLS_SUBDIR } from './constants.ts';
+import { AGENTS_DIR, SKILLS_SUBDIR, AGENTS_SUBDIR } from './constants.ts';
 import { parseSkillMd } from './skills.ts';
 
 export type InstallMode = 'symlink' | 'copy';
@@ -69,6 +69,14 @@ function isPathSafe(basePath: string, targetPath: string): boolean {
 export function getCanonicalSkillsDir(global: boolean, cwd?: string): string {
   const baseDir = global ? homedir() : cwd || process.cwd();
   return join(baseDir, AGENTS_DIR, SKILLS_SUBDIR);
+}
+
+/**
+ * Gets the canonical directory for agents (.agents/agents)
+ */
+export function getCanonicalAgentsDir(global: boolean, cwd?: string): string {
+  const baseDir = global ? homedir() : cwd || process.cwd();
+  return join(baseDir, AGENTS_DIR, AGENTS_SUBDIR);
 }
 
 /**

@@ -19,7 +19,7 @@ export function parseResourceType(subcommand: string | undefined): ResourceType 
     );
   }
 
-  const validTypes: ResourceType[] = ['skill', 'mcp', 'instruction', 'hook'];
+  const validTypes: ResourceType[] = ['skill', 'agent', 'mcp', 'instruction', 'hook'];
 
   if (!validTypes.includes(subcommand as ResourceType)) {
     throw new Error(
@@ -43,7 +43,7 @@ export function parseResourceType(subcommand: string | undefined): ResourceType 
  * @throws Error if resource type is not supported
  */
 export function validateResourceType(resourceType: ResourceType): void {
-  const supportedTypes: ResourceType[] = ['skill'];
+  const supportedTypes: ResourceType[] = ['skill', 'agent'];
 
   if (!supportedTypes.includes(resourceType)) {
     throw new Error(
@@ -61,6 +61,7 @@ export function validateResourceType(resourceType: ResourceType): void {
 export function getResourceTypeDisplayName(resourceType: ResourceType): string {
   const displayNames: Record<ResourceType, string> = {
     skill: 'skill',
+    agent: 'agent',
     mcp: 'MCP server',
     instruction: 'instruction',
     hook: 'hook',
@@ -78,6 +79,7 @@ export function getResourceTypeDisplayName(resourceType: ResourceType): string {
 export function getResourceTypePluralName(resourceType: ResourceType): string {
   const pluralNames: Record<ResourceType, string> = {
     skill: 'skills',
+    agent: 'agents',
     mcp: 'MCP servers',
     instruction: 'instructions',
     hook: 'hooks',

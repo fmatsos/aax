@@ -1,9 +1,9 @@
 /**
  * Resource types that can be managed by aax.
  * Currently only 'skill' is implemented, but this is designed to support
- * future resource types like 'mcp', 'instruction', 'hook', etc.
+ * future resource types like 'agent', 'mcp', 'instruction', 'hook', etc.
  */
-export type ResourceType = 'skill' | 'mcp' | 'instruction' | 'hook';
+export type ResourceType = 'skill' | 'agent' | 'mcp' | 'instruction' | 'hook';
 
 export type AgentType =
   | 'amp'
@@ -100,4 +100,36 @@ export interface RemoteSkill {
   sourceIdentifier: string;
   /** Any additional metadata from frontmatter */
   metadata?: Record<string, unknown>;
+}
+
+/**
+ * Represents an agent definition that can be installed for CLI tools.
+ * Agents are markdown files with frontmatter that define agent behaviors.
+ */
+export interface Agent {
+  /** Agent name (from markdown file or frontmatter) */
+  name: string;
+  /** Agent description (from frontmatter) */
+  description: string;
+  /** Path to the agent markdown file */
+  path: string;
+  /** Raw markdown content (body without frontmatter) */
+  rawContent?: string;
+  /** Frontmatter metadata from the base agent file */
+  metadata?: Record<string, unknown>;
+}
+
+/**
+ * CLI-specific frontmatter configuration for agents.
+ * These are YAML files that contain frontmatter to be merged with the base agent.
+ */
+export interface AgentFrontmatter {
+  /** CLI tool name (e.g., 'claude', 'copilot') */
+  cliTool: string;
+  /** Agent name this frontmatter applies to */
+  agentName: string;
+  /** Path to the frontmatter YAML file */
+  path: string;
+  /** Frontmatter data to be merged */
+  frontmatter: Record<string, unknown>;
 }
