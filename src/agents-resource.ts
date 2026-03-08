@@ -235,7 +235,7 @@ export function generateAgentContent(agent: Agent, frontmatter?: AgentFrontmatte
     : agent.metadata;
 
   // Use gray-matter to stringify the frontmatter
-  const result = matter.stringify(agent.rawContent || '', finalMetadata);
+  const result = matter.stringify(agent.rawContent || '', finalMetadata || {});
 
   return result;
 }

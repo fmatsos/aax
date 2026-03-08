@@ -11,6 +11,7 @@ import {
   getResourceTypeDisplayName,
 } from './resource-type.ts';
 import { AAX_NPX_INVOCATION } from './constants.ts';
+import { runAddAgent } from './add-agent.ts';
 
 // Helper to check if a value is a cancel symbol (works with both clack and our custom prompts)
 const isCancelled = (value: unknown): value is symbol => typeof value === 'symbol';
@@ -889,6 +890,31 @@ export async function runAdd(args: string[], options: AddOptions = {}): Promise<
   validateResourceType(resourceType);
 
   const source = args[0];
+
+  // Route to appropriate handler based on resource type
+  if (resourceType === 'agent') {
+    if (!source) {
+      console.log();
+      console.log(
+        pc.bgRed(pc.white(pc.bold(' ERROR '))) + ' ' + pc.red('Missing required argument: source')
+      );
+      console.log();
+      console.log(pc.dim('  Usage:'));
+      console.log(
+        `    ${pc.cyan(`${AAX_NPX_INVOCATION} add agent`)} ${pc.yellow('<source>')} ${pc.dim('[options]')}`
+      );
+      console.log();
+      console.log(pc.dim('  Example:'));
+      console.log(`    ${pc.cyan(`${AAX_NPX_INVOCATION} add agent`)} ${pc.yellow('owner/repo')}`);
+      console.log();
+      process.exit(1);
+    }
+
+    await runAddAgent(source, options);
+    return;
+  }
+
+  // Existing skill handling continues below
   let installTipShown = false;
 
   const showInstallTip = (): void => {
