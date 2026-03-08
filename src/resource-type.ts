@@ -11,7 +11,7 @@ import type { ResourceType } from './types.ts';
 export function parseResourceType(subcommand: string | undefined): ResourceType {
   if (!subcommand) {
     throw new Error(
-      'Resource type is required. Use: skill, mcp, instruction, or hook\n' +
+      'Resource type is required. Use: skill, subagent, mcp, instruction, or hook\n' +
         'Examples:\n' +
         '  aax add skill <source>\n' +
         '  aax remove skill <name>\n' +
@@ -19,12 +19,18 @@ export function parseResourceType(subcommand: string | undefined): ResourceType 
     );
   }
 
-  const validTypes: ResourceType[] = ['skill', 'agent', 'mcp', 'instruction', 'hook'];
+  const aliasMap: Record<string, ResourceType> = {
+    subagent: 'agent',
+  };
+  const normalized = aliasMap[subcommand] ?? subcommand;
 
-  if (!validTypes.includes(subcommand as ResourceType)) {
+  const validTypes: ResourceType[] = ['skill', 'agent', 'mcp', 'instruction', 'hook'];
+  const validInputs = ['skill', 'subagent', 'mcp', 'instruction', 'hook'];
+
+  if (!validTypes.includes(normalized as ResourceType)) {
     throw new Error(
       `Invalid resource type: '${subcommand}'\n` +
-        `Valid types: ${validTypes.join(', ')}\n` +
+        `Valid types: ${validInputs.join(', ')}\n` +
         'Examples:\n' +
         '  aax add skill <source>\n' +
         '  aax remove mcp <name>\n' +
@@ -32,7 +38,7 @@ export function parseResourceType(subcommand: string | undefined): ResourceType 
     );
   }
 
-  return subcommand as ResourceType;
+  return normalized as ResourceType;
 }
 
 /**
@@ -47,7 +53,9 @@ export function validateResourceType(resourceType: ResourceType): void {
 
   if (!supportedTypes.includes(resourceType)) {
     throw new Error(
-      `Resource type '${resourceType}' is not yet supported. Currently supported: ${supportedTypes.join(', ')}`
+      `Resource type '${resourceType}' is not yet supported. Currently supported: ${supportedTypes
+        .map((t) => getResourceTypeDisplayName(t))
+        .join(', ')}`
     );
   }
 }
@@ -61,7 +69,7 @@ export function validateResourceType(resourceType: ResourceType): void {
 export function getResourceTypeDisplayName(resourceType: ResourceType): string {
   const displayNames: Record<ResourceType, string> = {
     skill: 'skill',
-    agent: 'agent',
+    agent: 'subagent',
     mcp: 'MCP server',
     instruction: 'instruction',
     hook: 'hook',
@@ -79,7 +87,7 @@ export function getResourceTypeDisplayName(resourceType: ResourceType): string {
 export function getResourceTypePluralName(resourceType: ResourceType): string {
   const pluralNames: Record<ResourceType, string> = {
     skill: 'skills',
-    agent: 'agents',
+    agent: 'subagents',
     mcp: 'MCP servers',
     instruction: 'instructions',
     hook: 'hooks',

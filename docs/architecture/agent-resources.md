@@ -239,24 +239,29 @@ When an agent is available for multiple CLI tools, files are suffixed:
 
 ## Command Interface
 
-### Add Agent
+### Add Subagent (agent resources)
 
 ```bash
 # List available agents grouped by CLI tool
-aax add agent owner/repo --list
+aax add subagent owner/repo --list
 
 # Install all agents for all available CLI tools
-aax add agent owner/repo
+aax add subagent owner/repo
 
 # Install globally
-aax add agent owner/repo --global
+aax add subagent owner/repo --global
 
 # Install with yes flag (no prompts)
-aax add agent owner/repo -y
+aax add subagent owner/repo -y
 
 # Install globally with yes flag
-aax add agent owner/repo -g -y
+aax add subagent owner/repo -g -y
+
+# Install only for specific CLI tools (avoids confusion with the --agent skill filter)
+aax add subagent owner/repo --agent claude-code cursor
 ```
+
+> The CLI command is named `subagent` to distinguish it from the `--agent` option used to target CLI tools when installing or listing skills. Internally this still maps to the `agent` resource type.
 
 ### List Agents (Coming Soon)
 
@@ -303,7 +308,7 @@ aax remove agent explorer --global
 - `removeAgentForCli()` - Remove agent installation
 
 **Agent Add Command** (`src/add-agent.ts`):
-- `runAddAgent()` - Main handler for `aax add agent` command
+- `runAddAgent()` - Main handler for the `aax add subagent` command (alias: `agent`)
 - Clones/reads repository
 - Discovers agents and frontmatters
 - Groups by CLI tool
