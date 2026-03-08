@@ -12,7 +12,7 @@ import {
 import { installAgentForCli } from './agent-installer.ts';
 
 /**
- * Handle `aax add agent <source>` command.
+ * Handle `aax add subagent <source>` command (alias: agent).
  * Discovers agents and their CLI-specific frontmatters, then installs them.
  */
 export async function runAddAgent(source: string, options: AddOptions = {}): Promise<void> {

@@ -15,7 +15,7 @@ export type ResourceType = 'skill' | 'agent' | 'mcp' | 'instruction' | 'hook';
 ### Current Support
 
 - ✅ **skill**: Fully implemented and supported
-- ✅ **agent**: Fully implemented and supported (CLI-specific configurations)
+- ✅ **agent**: Fully implemented and supported (CLI-specific configurations, exposed via the `subagent` CLI command)
 - 🚧 **mcp**: Planned for future release
 - 🚧 **instruction**: Planned for future release
 - 🚧 **hook**: Planned for future release
@@ -35,7 +35,11 @@ const resourceType = parseResourceType('skill');
 
 // Validates and throws error if invalid
 parseResourceType('invalid');
-// Throws: "Resource type is required. Use: skill, mcp, instruction, or hook"
+// Throws: "Invalid resource type: 'invalid'\nValid types: skill, subagent, mcp, instruction, hook"
+
+// The CLI command `subagent` is normalized to the internal `agent` resource type
+parseResourceType('subagent');
+// Returns: 'agent'
 ```
 
 ### `validateResourceType(resourceType)`
@@ -54,7 +58,7 @@ Returns human-readable display names:
 
 ```typescript
 getResourceTypeDisplayName('skill')       // 'skill'
-getResourceTypeDisplayName('agent')       // 'agent'
+getResourceTypeDisplayName('agent')       // 'subagent'
 getResourceTypeDisplayName('mcp')         // 'MCP server'
 getResourceTypeDisplayName('instruction') // 'instruction'
 getResourceTypeDisplayName('hook')        // 'hook'
@@ -66,7 +70,7 @@ Returns plural forms for display:
 
 ```typescript
 getResourceTypePluralName('skill')       // 'skills'
-getResourceTypePluralName('agent')       // 'agents'
+getResourceTypePluralName('agent')       // 'subagents'
 getResourceTypePluralName('mcp')         // 'MCP servers'
 getResourceTypePluralName('instruction') // 'instructions'
 getResourceTypePluralName('hook')        // 'hooks'
@@ -176,10 +180,10 @@ aax add skill <source> [names...]
 aax remove skill <names...>
 aax list skill
 
-# Agents (supported)
-aax add agent <source>
-aax remove agent <names...>
-aax list agent
+# Subagents (supported, maps to internal agent type)
+aax add subagent <source>
+aax remove subagent <names...>
+aax list subagent
 
 # MCP Servers (future)
 aax add mcp <source> [names...]

@@ -901,11 +901,13 @@ export async function runAdd(args: string[], options: AddOptions = {}): Promise<
       console.log();
       console.log(pc.dim('  Usage:'));
       console.log(
-        `    ${pc.cyan(`${AAX_NPX_INVOCATION} add agent`)} ${pc.yellow('<source>')} ${pc.dim('[options]')}`
+        `    ${pc.cyan(`${AAX_NPX_INVOCATION} add subagent`)} ${pc.yellow('<source>')} ${pc.dim('[options]')}`
       );
       console.log();
       console.log(pc.dim('  Example:'));
-      console.log(`    ${pc.cyan(`${AAX_NPX_INVOCATION} add agent`)} ${pc.yellow('owner/repo')}`);
+      console.log(
+        `    ${pc.cyan(`${AAX_NPX_INVOCATION} add subagent`)} ${pc.yellow('owner/repo')}`
+      );
       console.log();
       process.exit(1);
     }

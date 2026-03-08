@@ -110,6 +110,7 @@ ${BOLD}Usage:${RESET} aax <command> <resource-type> [arguments] [options]
 
 ${BOLD}Resource Types:${RESET}
   skill            Agent skills (currently supported)
+  subagent         Agent definitions for specific CLIs (aliases: agent)
   mcp              MCP servers (planned)
   instruction      Instructions/rules (planned)
   hook             Hooks (planned)
@@ -144,6 +145,11 @@ ${BOLD}Examples:${RESET}
   ${DIM}$${RESET} aax add skill vercel-labs/agent-skills -g
   ${DIM}$${RESET} aax add skill vercel-labs/agent-skills --agent claude-code cursor
   ${DIM}$${RESET} aax add skill vercel-labs/agent-skills --skill pr-review commit
+
+  ${DIM}# Install subagents (agent definitions)${RESET}
+  ${DIM}$${RESET} aax add subagent owner/repo --list      ${DIM}# show available CLI frontmatters${RESET}
+  ${DIM}$${RESET} aax add subagent owner/repo --agent claude-code
+  ${DIM}$${RESET} aax add subagent ./agents --global      ${DIM}# install from local folder${RESET}
 
   ${DIM}# Remove skills${RESET}
   ${DIM}$${RESET} aax remove skill                   ${DIM}# interactive${RESET}

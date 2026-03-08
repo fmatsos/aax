@@ -94,23 +94,29 @@ When installing interactively, you can choose:
 | **Symlink** (Recommended) | Creates symlinks from each agent to a canonical copy. Single source of truth, easy updates. |
 | **Copy**                  | Creates independent copies for each agent. Use when symlinks aren't supported.              |
 
-### Install an Agent
+### Install a Subagent
 
 ```bash
-npx @fmatsos/aax add agent owner/repo
+npx @fmatsos/aax add subagent owner/repo
+# Show available CLI frontmatters before installing
+npx @fmatsos/aax add subagent owner/repo --list
+# Target a specific CLI tool (different from the --agent flag used for skills)
+npx @fmatsos/aax add subagent owner/repo --agent claude-code
+# Install from a local agents folder globally
+npx @fmatsos/aax add subagent ./agents --global -y
 ```
 
-Agents are CLI-specific configurations that customize agent behavior for different tools (Claude, Copilot, etc.). See [Agent Resources](#agent-resources) for details.
+Subagents are CLI-specific configurations that customize agent behavior for different tools (Claude, Copilot, etc.). This command name is `subagent` to avoid confusion with the `--agent` flag used to target CLI tools when installing skills. See [Agent Resources](#agent-resources) for details.
 
 ## Other Commands
 
 | Command                      | Description                                    |
 | ---------------------------- | ---------------------------------------------- |
 | `npx @fmatsos/aax list skill`      | List installed skills (alias: `ls`)            |
-| `npx @fmatsos/aax list agent`      | List installed agents (coming soon)            |
+| `npx @fmatsos/aax list subagent`   | List installed subagents (coming soon)         |
 | `npx @fmatsos/aax find [query]`    | Search for skills interactively or by keyword  |
 | `npx @fmatsos/aax remove skill [skills]` | Remove installed skills from agents      |
-| `npx @fmatsos/aax remove agent [agents]` | Remove installed agents (coming soon)    |
+| `npx @fmatsos/aax remove subagent [agents]` | Remove installed subagents (coming soon)    |
 | `npx @fmatsos/aax check`           | Check for available skill updates              |
 | `npx @fmatsos/aax update`          | Update all installed skills to latest versions |
 | `npx @fmatsos/aax init [name]`     | Create a new SKILL.md template                 |
@@ -229,13 +235,19 @@ repo/
 
 ```bash
 # List available agents grouped by CLI tool
-npx @fmatsos/aax add agent owner/repo --list
+npx @fmatsos/aax add subagent owner/repo --list
 
 # Install agents for all available CLI tools
-npx @fmatsos/aax add agent owner/repo
+npx @fmatsos/aax add subagent owner/repo
 
 # Install globally
-npx @fmatsos/aax add agent owner/repo --global
+npx @fmatsos/aax add subagent owner/repo --global
+
+# Install only for specific CLI tools
+npx @fmatsos/aax add subagent owner/repo --agent claude-code copilot
+
+# Install from a local folder (e.g., ./agents containing AGENT.md files)
+npx @fmatsos/aax add subagent ./agents --list
 ```
 
 Agents are installed to:
