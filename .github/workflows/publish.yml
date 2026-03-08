@@ -157,8 +157,14 @@ jobs:
           CHANGELOG=$(echo "$PRS" | jq -r '.[] | "- \(.title) (#\(.number))"')
           CONTRIBUTORS=$(echo "$PRS" | jq -r '.[].author.login' | sort -u | sed 's/^/@/' | paste -sd ', ' -)
 
+          # Get previous version for changelog link
+          PREVIOUS_VERSION=$(echo "$LATEST_TAG" | sed 's/^v//')
+          if [ -z "$PREVIOUS_VERSION" ]; then
+            PREVIOUS_VERSION="0.0.0"
+          fi
+
           # Generate release notes from template
-          export VERSION CHANGELOG CONTRIBUTORS
+          export VERSION CHANGELOG CONTRIBUTORS PREVIOUS_VERSION
           if [ -f .github/RELEASE_TEMPLATE.md ]; then
             envsubst < .github/RELEASE_TEMPLATE.md > release-notes.md
           else
