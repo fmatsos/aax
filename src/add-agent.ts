@@ -56,7 +56,9 @@ export async function runAddAgent(source: string, options: AddOptions = {}): Pro
     if (agents.length === 0) {
       spinner.stop(pc.red('No agents found'));
       p.outro(
-        pc.red('No valid agents found. Agents require an AGENT.md with name and description.')
+        pc.red(
+          'No valid agents found. Agent .md files require name and description in frontmatter.'
+        )
       );
       await cleanup(tempDir);
       process.exit(1);

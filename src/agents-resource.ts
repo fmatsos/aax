@@ -1,37 +1,9 @@
-import { readdir, readFile, stat } from 'fs/promises';
-import { join, basename, dirname, resolve, extname } from 'path';
+import { readdir, readFile } from 'fs/promises';
+import { join, basename, resolve, extname } from 'path';
 import matter from 'gray-matter';
 import type { Agent, AgentFrontmatter } from './types.ts';
 
 const SKIP_DIRS = ['node_modules', '.git', 'dist', 'build', '__pycache__'];
-
-/**
- * Check if a directory has an agent markdown file.
- * Agent files can be named AGENT.md or <name>.md
- */
-async function hasAgentMd(dir: string): Promise<string | null> {
-  try {
-    // First check for AGENT.md
-    const agentPath = join(dir, 'AGENT.md');
-    const stats = await stat(agentPath);
-    if (stats.isFile()) {
-      return agentPath;
-    }
-  } catch {
-    // Try to find any .md file
-    try {
-      const entries = await readdir(dir, { withFileTypes: true });
-      for (const entry of entries) {
-        if (entry.isFile() && extname(entry.name) === '.md' && entry.name !== 'README.md') {
-          return join(dir, entry.name);
-        }
-      }
-    } catch {
-      // Directory doesn't exist or can't be read
-    }
-  }
-  return null;
-}
 
 /**
  * Parse an agent markdown file.
@@ -54,7 +26,7 @@ export async function parseAgentMd(agentMdPath: string): Promise<Agent | null> {
     return {
       name: data.name,
       description: data.description,
-      path: dirname(agentMdPath),
+      path: agentMdPath,
       rawContent: body,
       metadata: data,
     };
@@ -144,7 +116,7 @@ export function mergeAgentFrontmatter(agent: Agent, cliFrontmatter: AgentFrontma
 
 /**
  * Discover all agents in a directory.
- * Looks in agents/ directory and common agent locations.
+ * Looks for flat .md files in agents/ directory and common agent locations.
  */
 export async function discoverAgents(basePath: string, subpath?: string): Promise<Agent[]> {
   const agents: Agent[] = [];
@@ -163,19 +135,15 @@ export async function discoverAgents(basePath: string, subpath?: string): Promis
       const entries = await readdir(dir, { withFileTypes: true });
 
       for (const entry of entries) {
-        if (!entry.isDirectory() || SKIP_DIRS.includes(entry.name)) {
+        if (!entry.isFile() || extname(entry.name) !== '.md' || entry.name === 'README.md') {
           continue;
         }
 
-        const agentDir = join(dir, entry.name);
-        const agentMdPath = await hasAgentMd(agentDir);
-
-        if (agentMdPath) {
-          const agent = await parseAgentMd(agentMdPath);
-          if (agent && !seenNames.has(agent.name)) {
-            agents.push(agent);
-            seenNames.add(agent.name);
-          }
+        const agentMdPath = join(dir, entry.name);
+        const agent = await parseAgentMd(agentMdPath);
+        if (agent && !seenNames.has(agent.name)) {
+          agents.push(agent);
+          seenNames.add(agent.name);
         }
       }
     } catch {

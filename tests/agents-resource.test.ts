@@ -1,5 +1,10 @@
 import { describe, it, expect } from 'vitest';
-import { discoverAgents, discoverAgentFrontmatters, groupAgentsByCliTool, generateAgentContent } from '../src/agents-resource.ts';
+import {
+  discoverAgents,
+  discoverAgentFrontmatters,
+  groupAgentsByCliTool,
+  generateAgentContent,
+} from '../src/agents-resource.ts';
 import type { Agent, AgentFrontmatter } from '../src/types.ts';
 
 describe('agents-resource', () => {
@@ -9,14 +14,14 @@ describe('agents-resource', () => {
         {
           name: 'explorer',
           description: 'Explores code',
-          path: '/test/agents/explorer',
+          path: '/test/agents/explorer.md',
           rawContent: 'Explorer agent content',
           metadata: { name: 'explorer', description: 'Explores code' },
         },
         {
           name: 'reviewer',
           description: 'Reviews code',
-          path: '/test/agents/reviewer',
+          path: '/test/agents/reviewer.md',
           rawContent: 'Reviewer agent content',
           metadata: { name: 'reviewer', description: 'Reviews code' },
         },
@@ -55,7 +60,7 @@ describe('agents-resource', () => {
         {
           name: 'explorer',
           description: 'Explores code',
-          path: '/test/agents/explorer',
+          path: '/test/agents/explorer.md',
           rawContent: 'Explorer agent content',
           metadata: { name: 'explorer', description: 'Explores code' },
         },
@@ -88,7 +93,7 @@ describe('agents-resource', () => {
       const agent: Agent = {
         name: 'explorer',
         description: 'Explores code',
-        path: '/test/agents/explorer',
+        path: '/test/agents/explorer.md',
         rawContent: 'Explorer agent instructions\n\nStep 1: Do something',
         metadata: {
           name: 'explorer',
@@ -112,7 +117,7 @@ describe('agents-resource', () => {
       // Should contain merged frontmatter
       expect(content).toContain('name: explorer');
       expect(content).toContain('description: Explores code');
-      expect(content).toContain('version: \'1.0\'');
+      expect(content).toContain("version: '1.0'");
       expect(content).toContain('model: claude-3');
       expect(content).toContain('temperature: 0.7');
 
@@ -125,7 +130,7 @@ describe('agents-resource', () => {
       const agent: Agent = {
         name: 'reviewer',
         description: 'Reviews code',
-        path: '/test/agents/reviewer',
+        path: '/test/agents/reviewer.md',
         rawContent: 'Reviewer instructions',
         metadata: {
           name: 'reviewer',
